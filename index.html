@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ravishankar Patel — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #0a0a0a; --white: #f2f0eb; --red: #e8321a;
+      --teal: #3dd9c0; --gold: #f5c842; --dark: #111111; --mid: #1a1a1a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; }
+    .cursor { width:12px;height:12px;background:var(--red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference; }
+    .cursor-ring { width:38px;height:38px;border:1.5px solid var(--teal);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%); }
+    body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.3; }
+
+    nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.3rem 3rem;backdrop-filter:blur(16px);background:rgba(10,10,10,.75);border-bottom:1px solid rgba(255,255,255,.05); }
+    .nav-logo { font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none; }
+    .nav-logo span { color:var(--red); }
+    .nav-links { display:flex;gap:2.5rem;list-style:none; }
+    .nav-links a { font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(242,240,235,.5);text-decoration:none;transition:color .25s;position:relative; }
+    .nav-links a::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--teal);transition:width .3s; }
+    .nav-links a:hover { color:var(--white); }
+    .nav-links a:hover::after { width:100%; }
+
+    #home { min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden; }
+    #home::after { content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:60px 60px;pointer-events:none; }
+    .hero-left { position:relative;z-index:2; }
+    .hero-tag { display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);padding:.35rem .9rem;margin-bottom:1.8rem;animation:fadeSlideUp .8s ease both; }
+    .hero-name { font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,8.5vw,9rem);line-height:.92;letter-spacing:.02em;animation:fadeSlideUp .9s ease both .1s; }
+    .hero-name .accent { color:var(--red);display:block; }
+    .hero-subtitle { font-size:1rem;color:rgba(242,240,235,.5);font-weight:300;margin-top:1.4rem;letter-spacing:.04em;animation:fadeSlideUp 1s ease both .2s; }
+    .hero-subtitle strong { color:var(--gold);font-weight:500; }
+    .hero-desc { max-width:430px;font-size:.95rem;line-height:1.85;color:rgba(242,240,235,.62);margin-top:1.4rem;animation:fadeSlideUp 1s ease both .3s; }
+    .hero-desc strong { color:var(--white);font-weight:500; }
+    .hero-cta { display:flex;gap:1rem;margin-top:2.4rem;animation:fadeSlideUp 1s ease both .4s; }
+    .btn { font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 2rem;text-decoration:none;transition:all .25s;cursor:none;display:inline-block; }
+    .btn-primary { background:var(--red);color:var(--white);border:2px solid var(--red); }
+    .btn-primary:hover { background:transparent;color:var(--red); }
+    .btn-outline { background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.18); }
+    .btn-outline:hover { border-color:var(--teal);color:var(--teal); }
+
+    .hero-right { position:relative;display:flex;align-items:center;justify-content:center;height:520px;z-index:2;animation:fadeIn 1.2s ease both .3s; }
+    .orbital-container { position:relative;width:360px;height:360px; }
+    .core-circle { position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 35%,#1c1c1c,#080808);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;overflow:hidden; }
+    .core-text { font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.3em;color:var(--red);text-align:center;z-index:2;animation:pulse 3s ease-in-out infinite; }
+    .ring { position:absolute;border-radius:50%;border:1px dashed;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin linear infinite; }
+    .ring-1 { width:410px;height:410px;border-color:rgba(61,217,192,.14);animation-duration:20s; }
+    .ring-2 { width:480px;height:480px;border-color:rgba(232,50,26,.09);animation-duration:28s;animation-direction:reverse; }
+    .skill-float { position:absolute;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .7rem;border-radius:2px;animation:floatTag 4s ease-in-out infinite;white-space:nowrap; }
+    .skill-float:nth-child(1) { background:rgba(61,217,192,.1);color:var(--teal);border:1px solid rgba(61,217,192,.3);top:6%;left:-14%;animation-delay:0s; }
+    .skill-float:nth-child(2) { background:rgba(232,50,26,.1);color:var(--red);border:1px solid rgba(232,50,26,.3);top:22%;right:-10%;animation-delay:.8s; }
+    .skill-float:nth-child(3) { background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.3);bottom:22%;left:-16%;animation-delay:1.5s; }
+    .skill-float:nth-child(4) { background:rgba(242,240,235,.05);color:rgba(242,240,235,.6);border:1px solid rgba(242,240,235,.12);bottom:8%;right:-6%;animation-delay:2.2s; }
+    .hero-number { position:absolute;bottom:2.5rem;right:3rem;font-family:'Bebas Neue',sans-serif;font-size:10rem;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;z-index:1; }
+
+    section { padding:7rem 3rem; }
+    .section-label { font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem; }
+    .section-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.95;letter-spacing:.02em;margin-bottom:3rem; }
+
+    .skills-strip { background:var(--red);padding:1.1rem 0;overflow:hidden;white-space:nowrap;display:flex; }
+    .skills-ticker { display:inline-flex;gap:3rem;animation:ticker 22s linear infinite;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.12em;color:rgba(10,10,10,.65); }
+    .skills-ticker span { color:rgba(10,10,10,.3);font-size:.8rem; }
+
+    #about { background:var(--dark);display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center; }
+    .about-stats { display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05); }
+    .stat-box { background:var(--dark);padding:2rem 1.5rem;text-align:center;transition:background .25s; }
+    .stat-box:hover { background:var(--mid); }
+    .stat-num { font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--red);line-height:1; }
+    .stat-num.teal { color:var(--teal); }
+    .stat-label { font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,240,235,.35);margin-top:.4rem; }
+    .about-text p { font-size:.95rem;line-height:1.85;color:rgba(242,240,235,.62);margin-bottom:1.2rem; }
+    .about-text p strong { color:var(--white);font-weight:500; }
+    .about-contact-pills { display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.5rem; }
+    .contact-pill { font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem 1rem;border:1px solid rgba(255,255,255,.1);color:rgba(242,240,235,.6);text-decoration:none;transition:border-color .25s,color .25s; }
+    .contact-pill:hover { border-color:var(--teal);color:var(--teal); }
+
+    #projects { background:var(--black); }
+    .projects-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(255,255,255,.04); }
+    .project-card { background:var(--dark);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background .3s;border:1px solid transparent; }
+    .project-card:hover { background:var(--mid);border-color:rgba(255,255,255,.06); }
+    .project-card::before { content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--red);transition:height .4s ease; }
+    .project-card:hover::before { height:100%; }
+    .project-num { font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(255,255,255,.04);line-height:1;margin-bottom:.8rem; }
+    .project-tag { display:inline-block;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.22rem .6rem;margin-bottom:.9rem; }
+    .tag-health { background:rgba(61,217,192,.1);color:var(--teal);border:1px solid rgba(61,217,192,.25); }
+    .tag-drone  { background:rgba(232,50,26,.1);color:var(--red);border:1px solid rgba(232,50,26,.25); }
+    .tag-ece    { background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.25); }
+    .project-title { font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.04em;margin-bottom:.8rem; }
+    .project-desc { font-size:.86rem;line-height:1.72;color:rgba(242,240,235,.48); }
+    .project-link { display:inline-block;margin-top:1.2rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .25s; }
+    .project-link:hover { border-color:var(--teal); }
+    .project-arrow { position:absolute;bottom:1.5rem;right:1.5rem;font-size:1.1rem;color:rgba(242,240,235,.1);transition:color .25s,transform .25s; }
+    .project-card:hover .project-arrow { color:var(--teal);transform:translate(4px,-4px); }
+
+    #certificates { background:var(--dark); }
+    .cert-gallery { display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(255,255,255,.04); }
+    .cert-frame { background:var(--dark);aspect-ratio:4/3;overflow:hidden;position:relative;transition:background .3s; }
+    .cert-frame:hover { background:var(--mid); }
+    .cert-frame img { width:100%;height:100%;object-fit:cover;filter:grayscale(30%) brightness(.85);transition:filter .4s,transform .4s;display:block; }
+    .cert-frame:hover img { filter:grayscale(0%) brightness(1);transform:scale(1.04); }
+    .cert-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.85) 0%,transparent 55%);opacity:0;transition:opacity .3s; }
+    .cert-frame:hover .cert-overlay { opacity:1; }
+    .cert-num { position:absolute;bottom:.8rem;left:.9rem;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--teal);z-index:2; }
+
+    #socials { background:var(--black); }
+    .socials-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(255,255,255,.04); }
+    .social-card { background:var(--dark);padding:2rem 1.5rem;text-decoration:none;color:var(--white);display:flex;align-items:center;gap:1.2rem;transition:background .25s,padding-left .3s;border:1px solid transparent; }
+    .social-card:hover { background:var(--mid);border-color:rgba(255,255,255,.05);padding-left:2.2rem; }
+    .social-icon { width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.07);font-size:.85rem;font-family:'Space Mono',monospace;font-weight:700;flex-shrink:0;background:rgba(255,255,255,.03); }
+    .social-info { flex:1;min-width:0; }
+    .social-label { font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem; }
+    .social-handle { font-size:.85rem;color:rgba(242,240,235,.65);overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .social-arrow { color:rgba(242,240,235,.15);transition:color .25s,transform .25s;font-size:.9rem; }
+    .social-card:hover .social-arrow { color:var(--red);transform:translateX(5px); }
+
+    #contact { background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
+    .contact-heading { font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,7rem);line-height:.9;letter-spacing:.02em; }
+    .contact-heading .line2 { color:var(--red); }
+    .contact-heading .line3 { -webkit-text-stroke:1px rgba(242,240,235,.25);color:transparent; }
+    .contact-sub { font-size:.95rem;color:rgba(242,240,235,.5);margin-top:1.5rem;line-height:1.7;max-width:380px; }
+    .contact-links { display:flex;flex-direction:column;gap:1.5px;background:rgba(255,255,255,.04); }
+    .contact-link { background:var(--dark);display:flex;align-items:center;gap:1.5rem;padding:1.5rem 1.8rem;text-decoration:none;color:var(--white);transition:background .25s,padding-left .3s; }
+    .contact-link:hover { background:var(--mid);padding-left:2.5rem; }
+    .contact-link-icon { font-size:1.1rem;width:34px;text-align:center; }
+    .contact-link-info { flex:1; }
+    .contact-link-label { font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem; }
+    .contact-link-value { font-size:.88rem;color:rgba(242,240,235,.65); }
+    .contact-link-arrow { color:rgba(242,240,235,.15);transition:color .25s,transform .25s; }
+    .contact-link:hover .contact-link-arrow { color:var(--red);transform:translateX(6px); }
+
+    footer { border-top:1px solid rgba(255,255,255,.05);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center; }
+    .f-logo { font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.12em; }
+    .f-logo span { color:var(--red); }
+    .f-copy { font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:rgba(242,240,235,.22);text-transform:uppercase; }
+    .f-tag { font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--teal);text-transform:uppercase; }
+
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn      { from{opacity:0} to{opacity:1} }
+    @keyframes spin        { from{transform:translate(-50%,-50%) rotate(0deg)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+    @keyframes pulse       { 0%,100%{opacity:1} 50%{opacity:.4} }
+    @keyframes floatTag    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes ticker      { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .reveal { opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+
+    @media(max-width:900px) {
+      #home,#about,#contact { grid-template-columns:1fr;padding:6rem 1.5rem 3rem; }
+      .hero-right { height:300px; }
+      .orbital-container { width:240px;height:240px; }
+      .ring-1 { width:280px;height:280px; }
+      .ring-2 { width:340px;height:340px; }
+      .projects-grid,.cert-gallery,.socials-grid { grid-template-columns:1fr; }
+      nav { padding:1rem 1.5rem; }
+      .nav-links { gap:1.2rem; }
+      section { padding:5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <a href="#home" class="nav-logo">RP<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#socials">Socials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-left">
+      <div class="hero-tag">Electronics &amp; Communication · ECE</div>
+      <h1 class="hero-name">Ravishankar<span class="accent">Patel.</span></h1>
+      <p class="hero-subtitle">Diploma Student · PLC Engineer · <strong>Optimist</strong></p>
+      <p class="hero-desc">Electronics and Communication Engineering polytechnic student with a strong passion for <strong>innovation and self-improvement</strong>. Eager to learn, develop new skills, and apply technical knowledge in the technology sector. Currently interning at <strong>Siemens COE, NITK Surathkal</strong>.</p>
+      <div class="hero-cta">
+        <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_74161a2418224e94bfaca2da7efa65a9.pdf" target="_blank" class="btn btn-primary">View Résumé</a>
+        <a href="#projects" class="btn btn-outline">My Projects</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="orbital-container">
+        <div class="core-circle"><div class="core-text">RAVISNKR<br>.PATEL</div></div>
+        <div class="skill-float">PLC · S7-1200</div>
+        <div class="skill-float">TIA Portal V18</div>
+        <div class="skill-float">Drone · MCAM</div>
+        <div class="skill-float">Arduino · IoT</div>
+      </div>
+    </div>
+    <div class="hero-number">01</div>
+  </section>
+
+  <div class="skills-strip">
+    <div class="skills-ticker">
+      PLC Programming <span>✦</span> TIA Portal V18 <span>✦</span> Siemens S7-1200 <span>✦</span> Arduino <span>✦</span> Drone Technology <span>✦</span> QR Code Systems <span>✦</span> IoT <span>✦</span> 5G &amp; 6G <span>✦</span> Ladder Logic <span>✦</span> Servo Motors <span>✦</span> Electronics &amp; Communication <span>✦</span> Automation <span>✦</span>
+      PLC Programming <span>✦</span> TIA Portal V18 <span>✦</span> Siemens S7-1200 <span>✦</span> Arduino <span>✦</span> Drone Technology <span>✦</span> QR Code Systems <span>✦</span> IoT <span>✦</span> 5G &amp; 6G <span>✦</span> Ladder Logic <span>✦</span> Servo Motors <span>✦</span> Electronics &amp; Communication <span>✦</span> Automation <span>✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-stats reveal">
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Real Projects</div></div>
+      <div class="stat-box"><div class="stat-num teal">8+</div><div class="stat-label">Certificates</div></div>
+      <div class="stat-box"><div class="stat-num" style="font-size:2rem;color:var(--gold)">NITK</div><div class="stat-label">Siemens COE Intern</div></div>
+      <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">Optimism Level</div></div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-label">// About Me</div>
+      <h2 class="section-title">A Bit<br>About Me.</h2>
+      <p>I'm <strong>Ravishankar Patel</strong>, a Diploma student in Electronics and Communication Engineering at <strong>SDM Polytechnic, Ujire</strong>, with a deep passion for innovation and self-improvement.</p>
+      <p>Currently completing an internship at the <strong>Siemens Centre of Excellence, NITK Surathkal</strong> — programming industrial PLC systems using TIA Portal V18 and the Siemens S7-1200 platform.</p>
+      <p>From <strong>autonomous drones</strong> and <strong>smart medicine dispensers</strong> to cutting-edge ECE research — I build things that matter.</p>
+      <div class="about-contact-pills">
+        <a href="tel:+917795405292" class="contact-pill">📞 +91 77954 05292</a>
+        <a href="mailto:ravishankarpatelps@gmail.com" class="contact-pill">✉ Gmail</a>
+        <a href="mailto:psravishankarpatel@icloud.com" class="contact-pill">✉ iCloud</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label reveal">// Projects</div>
+    <h2 class="section-title reveal">What I've<br>Built.</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <span class="project-tag tag-health">Healthcare · Automation</span>
+        <h3 class="project-title">Automated Medicine Dispenser</h3>
+        <p class="project-desc">A smart medicine dispensing system combining QR code scanning for medicine identification with servo motor control for precise dispensing. Reduces human errors, saves time, and ensures patients receive the right medicine — applicable in pharmacies, hospitals, clinics, and home healthcare.</p>
+        <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_77cd8c9b348d4abe9a654ab3efa89ef3.pdf" target="_blank" class="project-link">View Report →</a>
+        <div class="project-arrow">↗</div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">02</div>
+        <span class="project-tag tag-drone">Drone · Security · Solar</span>
+        <h3 class="project-title">MCAM — Motion Camera with Autonomous Mobility</h3>
+        <p class="project-desc">A smart motion-detecting security system integrated with drone tech. Stays inactive until motion is detected, then records and transmits video wirelessly in real time. Solar self-charging ensures continuous operation. Autonomous drone mode activates on threat detection — ideal for borders, farms, and smart homes.</p>
+        <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_fe63978ed28e44f0b7522226f7759fe3.pdf" target="_blank" class="project-link">View Report →</a>
+        <div class="project-arrow">↗</div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">03</div>
+        <span class="project-tag tag-ece">ECE · Research</span>
+        <h3 class="project-title">Advance Trends in ECE</h3>
+        <p class="project-desc">Research document covering key innovations in Electronics and Communication Engineering — 5G/6G, IoT, AI, and nanoelectronics. Explores applications in healthcare, smart cities, agriculture, and defence. Addresses challenges in security, spectrum management, and energy efficiency.</p>
+        <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_a9a1619c08e04ab187f61163a4f7ab11.pdf" target="_blank" class="project-link">View Report →</a>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATES -->
+  <section id="certificates">
+    <div class="section-label reveal">// Certificates</div>
+    <h2 class="section-title reveal">Credentials<br>&amp; Proof.</h2>
+    <div class="cert-gallery">
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_f09bf4ac005f4dc391f128dec562c94a~mv2.png/v1/fill/w_710,h_490,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3444_heic.png" alt="Certificate 1" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">01</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_0bbe682941764054ab01379f1a275120~mv2.png/v1/crop/x_1,y_1,w_3520,h_2559/fill/w_710,h_508,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3443_heic.png" alt="Certificate 2" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">02</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_5c81c4312df34d89b393a730748b3635~mv2.png/v1/fill/w_710,h_530,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screenshot%202025-09-05%20at%2011_39_57%E2%80%AFPM.png" alt="Certificate 3" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">03</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_33831374a11c4cb6ab0fbbf0ac2f6c5d~mv2.jpg/v1/fill/w_710,h_521,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c91f24_33831374a11c4cb6ab0fbbf0ac2f6c5d~mv2.jpg" alt="Certificate 4" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">04</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_1bf3c386ccc34fa49fdb91761424c253~mv2.jpg/v1/fill/w_710,h_495,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Ardiunolanguage%202_pages-to-jpg-0005.jpg" alt="Certificate 5" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">05</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_14b50e909b754060a05c624f3fb0b2e6~mv2.jpg/v1/fill/w_710,h_495,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/c91f24_14b50e909b754060a05c624f3fb0b2e6~mv2.jpg" alt="Certificate 6" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">06</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_2df4b30bf9be4475959b0098b4ea76e5~mv2.jpg/v1/fill/w_710,h_495,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/c91f24_2df4b30bf9be4475959b0098b4ea76e5~mv2.jpg" alt="Certificate 7" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">07</div></div>
+      <div class="cert-frame reveal"><img src="https://static.wixstatic.com/media/c91f24_5f5facd8eeba4ddeb074e46a1ea29fa3~mv2.jpg/v1/fill/w_710,h_495,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/c91f24_5f5facd8eeba4ddeb074e46a1ea29fa3~mv2.jpg" alt="Certificate 8" loading="lazy"/><div class="cert-overlay"></div><div class="cert-num">08</div></div>
+    </div>
+  </section>
+
+  <!-- SOCIALS -->
+  <section id="socials">
+    <div class="section-label reveal">// Find Me Online</div>
+    <h2 class="section-title reveal">Public<br>Profiles.</h2>
+    <div class="socials-grid">
+      <a href="https://www.instagram.com/ravisnkr.patel/" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:var(--red)">IG</div>
+        <div class="social-info"><div class="social-label">Instagram</div><div class="social-handle">@ravisnkr.patel</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://www.linkedin.com/in/ravishankar-patel-1a775b374" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:var(--teal)">in</div>
+        <div class="social-info"><div class="social-label">LinkedIn</div><div class="social-handle">Ravishankar Patel</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://x.com/Ravishankar_ps" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:var(--white)">𝕏</div>
+        <div class="social-info"><div class="social-label">Twitter / X</div><div class="social-handle">@Ravishankar_ps</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="http://discordapp.com/users/1306866565861343283" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:#5865F2">DC</div>
+        <div class="social-info"><div class="social-label">Discord</div><div class="social-handle">ravisnkr#patel</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://linktr.ee/ravishankar.patel" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:#39e09b">LT</div>
+        <div class="social-info"><div class="social-label">Linktree</div><div class="social-handle">ravishankar.patel</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://open.spotify.com/user/31ctoksdke4hctld4qtsbujbgyo4" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:#1DB954">SP</div>
+        <div class="social-info"><div class="social-label">Spotify</div><div class="social-handle">My Playlists</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://monkeytype.com/profile/ravisnkr_patel" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:var(--gold)">MT</div>
+        <div class="social-info"><div class="social-label">MonkeyType</div><div class="social-handle">ravisnkr_patel</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+      <a href="https://ravishankarpatel.in" target="_blank" class="social-card reveal">
+        <div class="social-icon" style="color:var(--teal)">WX</div>
+        <div class="social-info"><div class="social-label">Wix Portfolio</div><div class="social-handle">ravishankarpatel.in</div></div>
+        <div class="social-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label">// Contact</div>
+      <h2 class="contact-heading"><span>LET'S</span><br><span class="line2">BUILD</span><br><span class="line3">TOGETHER.</span></h2>
+      <p class="contact-sub">Open to internships, collaborations, and conversations about automation, electronics, and technology. Based in Mangaluru, Karnataka — available remotely too.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="tel:+917795405292" class="contact-link">
+        <div class="contact-link-icon">📞</div>
+        <div class="contact-link-info"><div class="contact-link-label">Phone</div><div class="contact-link-value">+91 7795405292</div></div>
+        <div class="contact-link-arrow">→</div>
+      </a>
+      <a href="mailto:ravishankarpatelps@gmail.com" class="contact-link">
+        <div class="contact-link-icon">✉</div>
+        <div class="contact-link-info"><div class="contact-link-label">Gmail</div><div class="contact-link-value">ravishankarpatelps@gmail.com</div></div>
+        <div class="contact-link-arrow">→</div>
+      </a>
+      <a href="mailto:psravishankarpatel@icloud.com" class="contact-link">
+        <div class="contact-link-icon">✉</div>
+        <div class="contact-link-info"><div class="contact-link-label">iCloud Mail</div><div class="contact-link-value">psravishankarpatel@icloud.com</div></div>
+        <div class="contact-link-arrow">→</div>
+      </a>
+      <a href="https://www.linkedin.com/in/ravishankar-patel-1a775b374" target="_blank" class="contact-link">
+        <div class="contact-link-icon">in</div>
+        <div class="contact-link-info"><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">Ravishankar Patel</div></div>
+        <div class="contact-link-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-logo">RP<span>.</span></div>
+    <div class="f-copy">© 2026 Ravishankar Patel · All Rights Reserved</div>
+    <div class="f-tag">// Optimist</div>
+  </footer>
+
+  <script>
+    const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='56px';ring.style.height='56px';});
+      el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='38px';ring.style.height='38px';});
+    });
+    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+    const secs=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll',()=>{let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-160)cur=s.id;});navAs.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--teal)':'rgba(242,240,235,.5)';});});
+  </script>
+</body>
+</html>
