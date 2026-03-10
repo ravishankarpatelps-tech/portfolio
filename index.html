@@ -8,7 +8,12 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230a0a0a'/%3E%3Cline x1='14' y1='54' x2='26' y2='10' stroke='%23e8321a' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='26' y1='10' x2='26' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M26 10 L46 10 L50 22 L26 32' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cline x1='26' y1='32' x2='50' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='54' cy='54' r='4' stroke='%23f5c842' stroke-width='2.5' fill='none'/%3E%3C/svg%3E"/>
 <style>
 :root{--red:#e8321a;--teal:#3dd9c0;--gold:#f5c842;--bg:#0a0a0a;--fg:#f2f0eb;--s1:#111111;--s2:#1a1a1a;--mu:rgba(242,240,235,.48)}
-[data-theme="light"]{--bg:#f0ede8;--fg:#0d0d0d;--s1:#e4e0da;--s2:#d8d4ce;--mu:rgba(10,10,10,.45)}
+[data-theme="light"]{
+  --bg:#faf8f4;--fg:#1a1814;
+  --s1:#f2ede6;--s2:#e8e2d9;
+  --mu:rgba(26,24,20,.5);
+  --red:#d42e15;--teal:#2bb89e;--gold:#d4a017;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:auto;transition:background .35s,color .35s}
@@ -25,7 +30,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;b
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;backdrop-filter:blur(22px);background:rgba(10,10,10,.82);border-bottom:1px solid rgba(255,255,255,.06);transition:background .35s}
-[data-theme="light"] nav{background:rgba(240,237,232,.9)}
+[data-theme="light"] nav{background:rgba(250,248,244,.95);border-bottom:1px solid rgba(26,24,20,.08);box-shadow:0 1px 20px rgba(26,24,20,.06)}
 .nl{display:flex;align-items:center;gap:.65rem;text-decoration:none}
 .nb{font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fg);font-weight:700}
 .nb em{color:var(--red);font-style:normal}
@@ -48,8 +53,8 @@ ul.nv a.act{color:var(--teal)}
 .hname .ac{color:var(--red);display:block}
 .hsub{font-size:.93rem;color:var(--mu);font-weight:300;margin-top:1.3rem;letter-spacing:.04em;animation:fu 1s ease both .2s}
 .hsub strong{color:var(--gold);font-weight:500}
-.hdesc{max-width:420px;font-size:.93rem;line-height:1.85;color:rgba(242,240,235,.58);margin-top:1.3rem;animation:fu 1s ease both .3s}
-[data-theme="light"] .hdesc{color:rgba(0,0,0,.58)}
+.hdesc{max-width:420px;font-size:.93rem;line-height:1.85;color:var(--mu);margin-top:1.3rem;animation:fu 1s ease both .3s}
+[data-theme="light"] .hdesc{color:rgba(26,24,20,.6)}
 .hdesc strong{color:var(--fg);font-weight:500}
 .hcta{display:flex;gap:1rem;margin-top:2.2rem;animation:fu 1s ease both .4s}
 .btn{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.9rem;text-decoration:none;transition:all .24s;display:inline-block;border:2px solid transparent}
@@ -61,7 +66,8 @@ ul.nv a.act{color:var(--teal)}
 .hr{position:relative;display:flex;align-items:center;justify-content:center;height:520px;z-index:2;animation:fi 1.2s ease both .3s}
 .ow{position:relative;width:340px;height:340px}
 .cc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 38%,#1e1e1e,#060606);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;overflow:hidden}
-[data-theme="light"] .cc{background:radial-gradient(circle at 38% 38%,#ccc9c3,#b0ada8)}
+[data-theme="light"] #home::before{background-image:linear-gradient(rgba(26,24,20,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,24,20,.04) 1px,transparent 1px)}
+[data-theme="light"] .cc{background:radial-gradient(circle at 38% 38%,#e8e2d9,#d5cfc6);border-color:rgba(26,24,20,.1)}
 .cs{width:168px;height:168px;animation:pulse 4s ease-in-out infinite}
 .ring{position:absolute;border-radius:50%;border:1px dashed;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin linear infinite}
 .r1{width:398px;height:398px;border-color:rgba(61,217,192,.12);animation-duration:22s}
@@ -98,8 +104,8 @@ section{padding:6rem 3rem}
 .sn{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--red);line-height:1}
 .sn.t{color:var(--teal)}
 .sl{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mu);margin-top:.35rem}
-.at p{font-size:.91rem;line-height:1.88;color:rgba(242,240,235,.6);margin-bottom:1rem}
-[data-theme="light"] .at p{color:rgba(0,0,0,.58)}
+.at p{font-size:.91rem;line-height:1.88;color:var(--mu);margin-bottom:1rem}
+[data-theme="light"] .at p{color:rgba(26,24,20,.62)}
 .at p strong{color:var(--fg);font-weight:500}
 .pills{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
 .pill{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.36rem .9rem;border:1px solid rgba(255,255,255,.1);color:var(--mu);text-decoration:none;transition:all .22s}
@@ -158,7 +164,7 @@ section{padding:6rem 3rem}
 #timeline{background:var(--s1)}
 .tl{position:relative;padding-left:2.4rem}
 .tl::before{content:'';position:absolute;left:.75rem;top:0;bottom:0;width:1px;background:rgba(255,255,255,.08)}
-[data-theme="light"] .tl::before{background:rgba(0,0,0,.1)}
+[data-theme="light"] .tl::before{background:rgba(26,24,20,.12)}
 .ti{position:relative;padding:0 0 2.6rem 2rem}
 .ti:last-child{padding-bottom:0}
 .td2{position:absolute;left:-1.7rem;top:.22rem;width:11px;height:11px;border-radius:50%;border:2px solid var(--teal);background:var(--s1);transition:background .25s}
@@ -171,7 +177,7 @@ section{padding:6rem 3rem}
 #certificates{background:var(--bg)}
 .cg{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
 .cf{background:#0d0d0d;aspect-ratio:4/3;overflow:hidden;position:relative;transition:background .28s;border:1px solid rgba(255,255,255,.04)}
-[data-theme="light"] .cf{background:#c8c4be;border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .cf{background:#e8e2d9;border-color:rgba(26,24,20,.06)}
 .cf:hover{border-color:rgba(61,217,192,.3)}
 .cf img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:grayscale(15%) brightness(.85) contrast(1.05);transition:filter .4s,transform .4s}
 .cf:hover img{filter:grayscale(0%) brightness(1) contrast(1);transform:scale(1.06)}
@@ -195,6 +201,39 @@ section{padding:6rem 3rem}
 
 /* CONTACT */
 #contact{background:var(--s1);display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center}
+
+/* AUTH MODAL */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(6px)}
+.auth-overlay.show{opacity:1;pointer-events:all}
+.auth-box{background:var(--s1);border:1px solid rgba(255,255,255,.08);max-width:400px;width:90%;padding:2.4rem 2rem;position:relative;transform:translateY(16px);transition:transform .28s}
+.auth-overlay.show .auth-box{transform:translateY(0)}
+[data-theme="light"] .auth-box{border-color:rgba(26,24,20,.1);box-shadow:0 8px 40px rgba(26,24,20,.12)}
+.auth-step{display:none}
+.auth-step.active{display:block}
+.auth-close{position:absolute;top:.9rem;right:1rem;background:none;border:none;color:var(--mu);font-size:1.1rem;cursor:pointer;line-height:1;padding:.2rem .4rem;transition:color .2s}
+.auth-close:hover{color:var(--red)}
+.auth-lbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+.auth-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;margin-bottom:1.4rem;line-height:1}
+.auth-reasons{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.6rem}
+.auth-reason{background:none;border:1px solid rgba(255,255,255,.1);padding:.85rem 1.1rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);text-align:left;cursor:pointer;transition:all .2s}
+[data-theme="light"] .auth-reason{border-color:rgba(0,0,0,.12)}
+.auth-reason:hover{border-color:var(--teal);color:var(--teal);padding-left:1.5rem}
+.auth-reason.selected{border-color:var(--teal);color:var(--teal);background:rgba(61,217,192,.06)}
+.auth-math{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.auth-q{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--fg);letter-spacing:.04em}
+.auth-input{background:var(--s2);border:1px solid rgba(255,255,255,.1);padding:.7rem 1rem;font-family:'Space Mono',monospace;font-size:.9rem;color:var(--fg);width:80px;text-align:center;outline:none;transition:border-color .2s}
+[data-theme="light"] .auth-input{background:var(--s1);border-color:rgba(0,0,0,.12);color:var(--fg)}
+.auth-input:focus{border-color:var(--teal)}
+.auth-input.wrong{border-color:var(--red);animation:shake .3s ease}
+.auth-err{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:var(--red);text-transform:uppercase;min-height:1rem;margin-bottom:.8rem}
+.auth-btn{background:var(--teal);color:#0a0a0a;border:none;font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:.85rem 1.8rem;cursor:pointer;transition:all .22s;font-weight:700}
+.auth-btn:hover{background:var(--red);color:#fff}
+.auth-btn:disabled{opacity:.4;cursor:not-allowed}
+.auth-prog{display:flex;gap:.4rem;margin-bottom:1.6rem}
+.auth-prog-dot{width:28px;height:3px;background:rgba(255,255,255,.1);transition:background .3s}
+.auth-prog-dot.done{background:var(--teal)}
+.auth-prog-dot.active{background:var(--gold)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .ch{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.8vw,6.8rem);line-height:.9;letter-spacing:.02em}
 .ch .r{color:var(--red)}
 .ch .g{-webkit-text-stroke:1px rgba(242,240,235,.22);color:transparent}
@@ -213,7 +252,7 @@ section{padding:6rem 3rem}
 
 /* FOOTER */
 footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center}
-[data-theme="light"] footer{border-color:rgba(0,0,0,.08)}
+[data-theme="light"] footer{border-color:rgba(26,24,20,.08)}
 .fl{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em}
 .fl em{color:var(--red);font-style:normal}
 .fc{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.1em;color:rgba(242,240,235,.18);text-transform:uppercase}
@@ -455,6 +494,46 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
   </div>
 </section>
 
+<!-- AUTH MODAL -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuth()">✕</button>
+
+    <!-- Progress dots -->
+    <div class="auth-prog">
+      <div class="auth-prog-dot active" id="prog1"></div>
+      <div class="auth-prog-dot" id="prog2"></div>
+    </div>
+
+    <!-- Step 1: Reason -->
+    <div class="auth-step active" id="step1">
+      <div class="auth-lbl">// Step 1 of 2</div>
+      <div class="auth-title">Why are you<br>reaching out?</div>
+      <div class="auth-reasons">
+        <button class="auth-reason" onclick="selectReason(this)">💼 Internship / Job opportunity</button>
+        <button class="auth-reason" onclick="selectReason(this)">🤝 Collaboration / Project</button>
+        <button class="auth-reason" onclick="selectReason(this)">🎓 Academic / College related</button>
+        <button class="auth-reason" onclick="selectReason(this)">💬 Just want to connect</button>
+      </div>
+      <button class="auth-btn" id="nextBtn" onclick="goStep2()" disabled>Next →</button>
+    </div>
+
+    <!-- Step 2: Math -->
+    <div class="auth-step" id="step2">
+      <div class="auth-lbl">// Step 2 of 2 — Quick check</div>
+      <div class="auth-title">Prove you're<br>not a bot.</div>
+      <div class="auth-math">
+        <span class="auth-q" id="mathQ"></span>
+        <span class="auth-q">=</span>
+        <input class="auth-input" id="mathAns" type="number" placeholder="?" autocomplete="off" oninput="clearErr()"/>
+      </div>
+      <div class="auth-err" id="mathErr"></div>
+      <button class="auth-btn" onclick="checkMath()">Reveal Contact ↗</button>
+    </div>
+
+  </div>
+</div>
+
 <footer>
   <div class="fl">PSR<em>.</em></div>
   <div class="fc">© 2026 Ravishankar Patel P S · All Rights Reserved</div>
@@ -491,12 +570,97 @@ function toggleTheme(){
   });
 })();
 
-/* CONTACT REVEAL */
+/* AUTH MODAL */
 const _p=atob('KzkxIDc3OTU0MDUyOTI='),_g=atob('cmF2aXNoYW5rYXJwYXRlbHBzQGdtYWlsLmNvbQ=='),_i=atob('cHNyYXZpc2hhbmthcnBhdGVsQGljbG91ZC5jb20=');
-function rc(lid,did,type,val){const l=document.getElementById(lid),d=document.getElementById(did);if(!l||!d)return;let s=false;l.addEventListener('click',e=>{e.preventDefault();if(!s){d.textContent=val;l.href=type+val;s=true}else window.location.href=type+val})}
-function rp(pid,type,val){const p=document.getElementById(pid);if(!p)return;let s=false;p.addEventListener('click',e=>{e.preventDefault();if(!s){p.textContent=(type==='tel:'?'📞 ':'✉ ')+val;p.href=type+val;s=true}else window.location.href=type+val})}
-rc('phone-link','phone-display','tel:',_p);rc('gmail-link','gmail-display','mailto:',_g);rc('icloud-link','icloud-display','mailto:',_i);
-rp('pill-phone','tel:',_p);rp('pill-gmail','mailto:',_g);rp('pill-icloud','mailto:',_i);
+let authTarget=null, mathAnswer=0;
+
+function openAuth(target){
+  authTarget=target;
+  // reset modal state
+  document.querySelectorAll('.auth-reason').forEach(r=>r.classList.remove('selected'));
+  document.getElementById('nextBtn').disabled=true;
+  document.getElementById('mathAns').value='';
+  document.getElementById('mathErr').textContent='';
+  showStep(1);
+  document.getElementById('authOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeAuth(){
+  document.getElementById('authOverlay').classList.remove('show');
+  document.body.style.overflow='';
+  authTarget=null;
+}
+function showStep(n){
+  document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  // update progress dots
+  [1,2].forEach(i=>{
+    const d=document.getElementById('prog'+i);
+    d.className='auth-prog-dot'+(i<n?' done':i===n?' active':'');
+  });
+  if(n===2) generateMath();
+}
+function selectReason(el){
+  document.querySelectorAll('.auth-reason').forEach(r=>r.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('nextBtn').disabled=false;
+}
+function goStep2(){ showStep(2); }
+function generateMath(){
+  const a=Math.floor(Math.random()*9)+2, b=Math.floor(Math.random()*9)+2;
+  const ops=['+','-','×'];
+  const op=ops[Math.floor(Math.random()*ops.length)];
+  let ans;
+  if(op==='+') ans=a+b;
+  else if(op==='-') ans=a-b;
+  else ans=a*b;
+  mathAnswer=ans;
+  document.getElementById('mathQ').textContent=a+' '+op+' '+b;
+  document.getElementById('mathAns').value='';
+}
+function clearErr(){ document.getElementById('mathErr').textContent=''; }
+function checkMath(){
+  const val=parseInt(document.getElementById('mathAns').value);
+  if(isNaN(val)){ document.getElementById('mathErr').textContent='Enter a number'; return; }
+  if(val!==mathAnswer){
+    document.getElementById('mathErr').textContent='Wrong — try again';
+    document.getElementById('mathAns').classList.add('wrong');
+    setTimeout(()=>{document.getElementById('mathAns').classList.remove('wrong');generateMath();document.getElementById('mathAns').value='';},800);
+    return;
+  }
+  // correct — reveal display text first, then close, then open link
+  revealDisplay(authTarget);
+  closeAuth();
+  setTimeout(()=>{
+    if(authTarget==='phone') window.location.href='tel:'+_p;
+    else if(authTarget==='gmail') window.location.href='mailto:'+_g;
+    else if(authTarget==='icloud') window.location.href='mailto:'+_i;
+  }, 400);
+}
+function revealDisplay(t){
+  if(t==='phone'){
+    const d=document.getElementById('phone-display'); if(d) d.textContent=_p;
+    const p=document.getElementById('pill-phone'); if(p) p.textContent='📞 '+_p;
+  } else if(t==='gmail'){
+    const d=document.getElementById('gmail-display'); if(d) d.textContent=_g;
+    const p=document.getElementById('pill-gmail'); if(p) p.textContent='✉ '+_g;
+  } else if(t==='icloud'){
+    const d=document.getElementById('icloud-display'); if(d) d.textContent=_i;
+    const p=document.getElementById('pill-icloud'); if(p) p.textContent='✉ '+_i;
+  }
+}
+// close on overlay background click
+document.getElementById('authOverlay').addEventListener('click',function(e){ if(e.target===this) closeAuth(); });
+// close on Escape
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeAuth(); });
+
+// Wire up contact links and pills to auth modal
+document.getElementById('phone-link').addEventListener('click',e=>{e.preventDefault();openAuth('phone')});
+document.getElementById('gmail-link').addEventListener('click',e=>{e.preventDefault();openAuth('gmail')});
+document.getElementById('icloud-link').addEventListener('click',e=>{e.preventDefault();openAuth('icloud')});
+document.getElementById('pill-phone').addEventListener('click',e=>{e.preventDefault();openAuth('phone')});
+document.getElementById('pill-gmail').addEventListener('click',e=>{e.preventDefault();openAuth('gmail')});
+document.getElementById('pill-icloud').addEventListener('click',e=>{e.preventDefault();openAuth('icloud')});
 
 /* RADAR */
 (function(){
