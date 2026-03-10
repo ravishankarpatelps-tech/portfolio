@@ -67,10 +67,9 @@ ul.nv a.act{color:var(--teal)}
 /* Force Bebas Neue — critical for big name display */
 /* Force Bebas Neue — critical for big name display */
 .hname,.st,footer .fl,.skfc-pct,.pn,.sn,.ch{font-family:'Bebas Neue',cursive!important}
-/* GLITCH on name hover */
-.hname{font-size:clamp(3.2rem,7.8vw,8.8rem);line-height:.92;letter-spacing:.02em;animation:fu .9s ease both .1s;position:relative;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
-.hname:hover{animation:none}
-.hname.glitch{animation:glitch .4s linear!important}
+/* GLITCH on name — continuous loop */
+.hname{font-size:clamp(3.2rem,7.8vw,8.8rem);line-height:.92;letter-spacing:.02em;animation:fu .9s ease both .1s,glitch 4s linear 1.5s infinite;position:relative;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+.hname:hover{animation:fu .9s ease both .1s,glitch 1.2s linear infinite}
 @keyframes glitch{
   0%{clip-path:none;transform:none}
   10%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-3px,0)}
@@ -677,18 +676,7 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 /* GLITCH on name — works on both hover (desktop) and tap (mobile) */
-(function(){
-  const el=document.querySelector('.hname');
-  if(!el)return;
-  function doGlitch(){
-    if(el.classList.contains('glitch'))return;
-    el.classList.add('glitch');
-    setTimeout(()=>el.classList.remove('glitch'),420);
-  }
-  el.addEventListener('mouseenter',doGlitch);
-  el.addEventListener('click',doGlitch);
-  el.addEventListener('touchstart',function(e){e.preventDefault();doGlitch();},{passive:false});
-})();
+/* glitch now CSS-driven — no JS needed */
 
 /* TYPING ANIMATION in hero subtitle */
 (function(){
