@@ -485,10 +485,6 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
     <div class="stt"><div class="sn t">8+</div><div class="sl">Certificates</div></div>
     <div class="stt"><div class="sn" style="font-size:1.9rem;color:var(--gold)">NITK</div><div class="sl">Siemens COE Intern</div></div>
     <div class="stt"><div class="sn">90</div><div class="sl">WPM Typing</div></div>
-    <div class="stt" style="grid-column:1/-1;background:var(--s2)">
-      <div class="sl" style="margin-bottom:.5rem">// Age — live</div>
-      <div id="age-ticker" style="font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--teal);line-height:2">—</div>
-    </div>
   </div>
   <div class="at si">
     <div class="lb">// About Me</div>
@@ -733,11 +729,12 @@ document.querySelectorAll('.skfc').forEach(card=>{
 /* TERMINAL EASTER EGG */
 const termCmds={
   whoami:`<span style="color:#00ff41">ravishankar_patel_ps</span> — ECE Trainee @ Siemens COE, NITK Surathkal\nDiploma student · SDM Polytechnic, Ujire · Graduating 06/2026`,
+  age:`<span style="color:#00ff41">AGE:</span> <span id="term-age-out">calculating...</span>\n<span style="opacity:.5">(live ticker — updates every second)</span>`,
   skills:`<span style="color:#00ff41">SKILLS:</span>\n  PLC / TIA Portal ........... 88%\n  Factory Automation ......... 82%\n  Arduino / ESP32 / 8051 ..... 78%\n  SCADA & HMI ................ 75%\n  C++ / C# ................... 72%\n  PCB Design ................. 70%\n  CAD Software ............... 65%\n  Verilog / HTML ............. 60%`,
   contact:`<span style="color:#00ff41">CONTACT:</span>\n  Run this command then click the contact section\n  or use the auth flow on the website.`,
   projects:`<span style="color:#00ff41">PROJECTS:</span>\n  [01] Automated Medicine Dispenser\n  [02] MCAM — Motion Camera with Autonomous Mobility\n  [03] Advance Trends in ECE`,
   social:`<span style="color:#00ff41">SOCIAL:</span>\n  Instagram  → @ravisnkr.patel\n  LinkedIn   → ravishankar-patel-1a775b374\n  Twitter/X  → @Ravishankar_ps\n  MonkeyType → ravisnkr_patel`,
-  help:`<span style="color:#00ff41">AVAILABLE COMMANDS:</span>\n  whoami    — who is this person\n  skills    — list all skills\n  projects  — project list\n  social    — social links\n  contact   — contact info\n  clear     — clear terminal\n  exit      — close terminal`,
+  help:`<span style="color:#00ff41">AVAILABLE COMMANDS:</span>\n  whoami    — who is this person\n  age       — how old am I right now (live)\n  skills    — list all skills\n  projects  — project list\n  social    — social links\n  contact   — contact info\n  clear     — clear terminal\n  exit      — close terminal`,
   clear:'__clear__',
   exit:'__exit__'
 };
@@ -768,6 +765,8 @@ document.getElementById('termIn').addEventListener('keydown',function(e){
   if(res==='__exit__'){closeTerm();return;}
   out.innerHTML+=res?res+'\n':`<span style="color:#ff4444">command not found: ${val} — type 'help'</span>\n`;
   out.scrollTop=out.scrollHeight;
+  // start live age ticker if age command was just run
+  if(val==='age') startTermAge();
 });
 // open with backtick on desktop, hidden button on mobile
 document.addEventListener('keydown',e=>{if(e.key==='`')openTerm()});
@@ -951,38 +950,28 @@ setTimeout(animBars,600);
   tick();setInterval(tick,1000);
 })();
 
-/* LIVE AGE TICKER — DOB: 02 Jan 2008 */
-(function(){
-  const el=document.getElementById('age-ticker');
-  if(!el)return;
+/* LIVE AGE TICKER — only runs inside terminal on 'age' command */
+let ageInterval=null;
+function startTermAge(){
   const dob=new Date('2008-01-02T00:00:00');
   function pad(n,len=2){return String(n).padStart(len,'0')}
   function tick(){
-    const now=new Date();
-    const diff=now-dob;
+    const el=document.getElementById('term-age-out');
+    if(!el){clearInterval(ageInterval);return;}
+    const diff=new Date()-dob;
     const totalSec=Math.floor(diff/1000);
     const s=totalSec%60;
-    const totalMin=Math.floor(totalSec/60);
-    const m=totalMin%60;
-    const totalHrs=Math.floor(totalMin/60);
-    const h=totalHrs%24;
-    const totalDays=Math.floor(totalHrs/24);
+    const m=Math.floor(totalSec/60)%60;
+    const h=Math.floor(totalSec/3600)%24;
+    const totalDays=Math.floor(totalSec/86400);
     const d=totalDays%365;
     const y=Math.floor(totalDays/365);
-    el.innerHTML=
-      `<span style="color:var(--fg);font-size:1.4rem;font-family:'Bebas Neue',cursive">${y}</span>`+
-      `<span style="color:var(--mu)"> yrs &nbsp;</span>`+
-      `<span style="color:var(--fg)">${pad(d,3)}</span>`+
-      `<span style="color:var(--mu)"> days &nbsp;</span>`+
-      `<span style="color:var(--teal)">${pad(h)}</span>`+
-      `<span style="color:var(--mu)">h </span>`+
-      `<span style="color:var(--teal)">${pad(m)}</span>`+
-      `<span style="color:var(--mu)">m </span>`+
-      `<span style="color:var(--red)">${pad(s)}</span>`+
-      `<span style="color:var(--mu)">s</span>`;
+    el.textContent=`${y} yrs · ${pad(d,3)} days · ${pad(h)}h ${pad(m)}m ${pad(s)}s`;
   }
-  tick();setInterval(tick,1000);
-})();
+  if(ageInterval) clearInterval(ageInterval);
+  ageInterval=setInterval(tick,1000);
+  tick();
+}
 
 /* NAV ACTIVE */
 const secs=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('ul.nv a');
