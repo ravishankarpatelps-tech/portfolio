@@ -4,7 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Ravishankar Patel P S — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230a0a0a'/%3E%3Cline x1='14' y1='54' x2='26' y2='10' stroke='%23e8321a' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='26' y1='10' x2='26' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M26 10 L46 10 L50 22 L26 32' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cline x1='26' y1='32' x2='50' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='54' cy='54' r='4' stroke='%23f5c842' stroke-width='2.5' fill='none'/%3E%3C/svg%3E"/>
 <style>
 :root{--red:#e8321a;--teal:#3dd9c0;--gold:#f5c842;--bg:#0a0a0a;--fg:#f2f0eb;--s1:#111111;--s2:#1a1a1a;--mu:rgba(242,240,235,.48)}
@@ -14,6 +16,18 @@
   --mu:rgba(26,24,20,.5);
   --red:#d42e15;--teal:#2bb89e;--gold:#d4a017;
 }
+[data-theme="terminal"]{
+  --bg:#020c02;--fg:#00ff41;--s1:#041004;--s2:#071807;
+  --mu:rgba(0,255,65,.45);--red:#00ff41;--teal:#00ff41;--gold:#00ff41;
+}
+
+/* SCROLL PROGRESS BAR */
+#spb{position:fixed;top:0;left:0;height:2.5px;width:0%;background:linear-gradient(90deg,var(--teal),var(--red));z-index:9998;transition:width .1s linear;pointer-events:none}
+
+/* SECTION DIAGONAL DIVIDER */
+.div-slash{height:60px;background:var(--s1);clip-path:polygon(0 0,100% 0,100% 100%,0 60%);margin-top:-1px}
+.div-slash.r{background:var(--bg)}
+.div-slash.s2{background:var(--s2)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:auto;transition:background .35s,color .35s}
@@ -49,8 +63,76 @@ ul.nv a.act{color:var(--teal)}
 #home::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
 .hl{position:relative;z-index:2}
 .htag{display:inline-block;font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);padding:.3rem .85rem;margin-bottom:1.6rem;animation:fu .8s ease both}
-.hname{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,7.8vw,8.8rem);line-height:.92;letter-spacing:.02em;animation:fu .9s ease both .1s}
 .hname .ac{color:var(--red);display:block}
+/* Force Bebas Neue — critical for big name display */
+/* Force Bebas Neue — critical for big name display */
+.hname,.st,footer .fl,.skfc-pct,.pn,.sn,.ch{font-family:'Bebas Neue',cursive!important}
+/* GLITCH on name — realistic loop with long pause between bursts */
+.hname{font-size:clamp(3.2rem,7.8vw,8.8rem);line-height:.92;letter-spacing:.02em;animation:fu .9s ease both .1s;position:relative;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+.hname.glitch{animation:glitchloop 5s linear infinite}
+@keyframes glitchloop{
+  0%{clip-path:none;transform:none;color:inherit}
+  /* long pause — name sits clean */
+  78%{clip-path:none;transform:none;color:inherit}
+  /* burst starts */
+  79%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-4px,0);color:var(--red)}
+  80%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(4px,0);color:inherit}
+  81%{clip-path:none;transform:translate(-2px,1px);color:inherit}
+  82%{clip-path:polygon(0 10%,100% 10%,100% 30%,0 30%);transform:translate(3px,-1px);color:var(--teal)}
+  83%{clip-path:none;transform:none;color:inherit}
+  84%{clip-path:polygon(0 50%,100% 50%,100% 70%,0 70%);transform:translate(-3px,2px);color:var(--red)}
+  85%{clip-path:none;transform:translate(2px,0);color:inherit}
+  86%{clip-path:polygon(0 0,100% 0,100% 20%,0 20%);transform:translate(-4px,0);color:var(--teal)}
+  87%{clip-path:polygon(0 70%,100% 70%,100% 90%,0 90%);transform:translate(4px,-2px);color:inherit}
+  88%{clip-path:none;transform:none;color:inherit}
+  /* settle back clean */
+  100%{clip-path:none;transform:none;color:inherit}
+}
+@keyframes glitch{
+  0%{clip-path:none;transform:none}
+  10%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-3px,0)}
+  20%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(3px,0)}
+  30%{clip-path:none;transform:translate(-2px,1px)}
+  40%{clip-path:polygon(0 10%,100% 10%,100% 30%,0 30%);transform:translate(2px,-1px)}
+  50%{clip-path:none;transform:none}
+  60%{clip-path:polygon(0 50%,100% 50%,100% 70%,0 70%);transform:translate(-1px,2px)}
+  70%{clip-path:none;transform:translate(1px,0)}
+  80%{clip-path:polygon(0 0,100% 0,100% 20%,0 20%);transform:translate(-3px,0)}
+  90%{clip-path:none;transform:none}
+  100%{clip-path:none;transform:none}
+}
+
+/* TYPING cursor in subtitle */
+.hsub .cursor{display:inline-block;width:2px;height:.9em;background:var(--teal);vertical-align:middle;margin-left:2px;animation:blink2 .8s step-end infinite}
+@keyframes blink2{0%,100%{opacity:1}50%{opacity:0}}
+
+/* SKILL CARD FLIP */
+.skfl{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:3rem}
+.skfc{height:90px;perspective:600px;cursor:pointer}
+.skfc-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.skfc:hover .skfc-in,.skfc.flipped .skfc-in{transform:rotateY(180deg)}
+.skfc-f,.skfc-b{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.3rem;border:1px solid rgba(255,255,255,.07);padding:.8rem}
+[data-theme="light"] .skfc-f,[data-theme="light"] .skfc-b{border-color:rgba(26,24,20,.09)}
+.skfc-f{background:var(--s1)}
+.skfc-b{background:var(--s2);transform:rotateY(180deg)}
+.skfc-name{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);text-align:center}
+.skfc-pct{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--teal);line-height:1}
+.skfc-desc{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.08em;color:var(--mu);text-align:center;line-height:1.5}
+
+/* TERMINAL GREEN theme overrides */
+[data-theme="terminal"] nav{background:rgba(2,12,2,.95);border-color:rgba(0,255,65,.15)}
+[data-theme="terminal"] .htag{color:#00ff41;border-color:#00ff41}
+[data-theme="terminal"] .status-dot{background:#00ff41}
+[data-theme="terminal"] .bp{background:#00ff41;color:#020c02;border-color:#00ff41}
+[data-theme="terminal"] .bp:hover{background:transparent;color:#00ff41}
+[data-theme="terminal"] .bo{border-color:rgba(0,255,65,.3);color:#00ff41}
+[data-theme="terminal"] body::after{opacity:.35}
+[data-theme="terminal"] #spb{background:#00ff41}
+[data-theme="terminal"] .hname .ac{color:#00ff41}
+[data-theme="terminal"] .tw{background:#00ff41}
+[data-theme="terminal"] .tbtn{border-color:rgba(0,255,65,.3);color:rgba(0,255,65,.6)}
+[data-theme="terminal"] .tbtn:hover{border-color:#00ff41;color:#00ff41}
+[data-theme="terminal"] .cc{background:radial-gradient(circle at 38% 38%,#071807,#020c02);border-color:rgba(0,255,65,.2)}
 .hsub{font-size:.93rem;color:var(--mu);font-weight:300;margin-top:1.3rem;letter-spacing:.04em;animation:fu 1s ease both .2s}
 .hsub strong{color:var(--gold);font-weight:500}
 .hdesc{max-width:420px;font-size:.93rem;line-height:1.85;color:var(--mu);margin-top:1.3rem;animation:fu 1s ease both .3s}
@@ -251,13 +333,17 @@ section{padding:6rem 3rem}
 .cl:hover .cla{color:var(--red);transform:translateX(5px)}
 
 /* FOOTER */
-footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center}
+footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
 [data-theme="light"] footer{border-color:rgba(26,24,20,.08)}
 .fl{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em}
 .fl em{color:var(--red);font-style:normal}
 .fc{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.1em;color:rgba(242,240,235,.18);text-transform:uppercase}
 [data-theme="light"] .fc{color:rgba(0,0,0,.22)}
 .ft{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.12em;color:var(--teal);text-transform:uppercase}
+/* mobile footer theme toggle btn */
+#mobileThemeBtn{display:none;background:none;border:1px solid rgba(255,255,255,.18);padding:.35rem .8rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--mu);cursor:pointer;transition:all .22s}
+[data-theme="light"] #mobileThemeBtn{border-color:rgba(0,0,0,.18)}
+#mobileThemeBtn:hover{border-color:var(--teal);color:var(--teal)}
 
 @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fi{from{opacity:0}to{opacity:1}}
@@ -279,13 +365,39 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
   nav{padding:1rem 1.5rem}ul.nv{gap:.9rem}
   section{padding:4rem 1.5rem}
 }
+@media(max-width:680px){
+  footer{flex-direction:column;align-items:flex-start;padding:1.4rem 1.5rem;gap:.6rem}
+  .fc{font-size:.48rem}
+  #mobileThemeBtn{display:block}
+  #visit-count{display:block!important}
+  #footer-live{font-size:.48rem}
+}
 @media(max-width:580px){.hs{display:none}}
 </style>
 </head>
 <body>
 
+<div id="spb"></div>
 <div id="cd"></div>
 <div id="cr"></div>
+
+<!-- TERMINAL EASTER EGG -->
+<div id="termOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:8000;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+  <div id="termBox" style="width:min(680px,94vw);background:#020c02;border:1px solid #00ff41;padding:1.4rem 1.6rem;font-family:'Space Mono',monospace;font-size:.78rem;color:#00ff41;max-height:80vh;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,255,65,.2);padding-bottom:.7rem;margin-bottom:.8rem">
+      <span style="letter-spacing:.15em;font-size:.65rem;opacity:.6">PSR_TERMINAL v1.0 — press ESC or type 'exit'</span>
+      <button onclick="closeTerm()" style="background:none;border:none;color:#00ff41;cursor:pointer;font-size:1rem;opacity:.6">✕</button>
+    </div>
+    <div id="termOut" style="flex:1;overflow-y:auto;margin-bottom:.8rem;line-height:1.9"></div>
+    <div style="display:flex;align-items:center;gap:.5rem;border-top:1px solid rgba(0,255,65,.15);padding-top:.7rem">
+      <span style="opacity:.5">~/psr $</span>
+      <input id="termIn" style="flex:1;background:none;border:none;color:#00ff41;font-family:'Space Mono',monospace;font-size:.78rem;outline:none" placeholder="type a command..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+    </div>
+  </div>
+</div>
+
+<!-- TERMINAL HINT (bottom left, subtle) -->
+<div id="termHint" style="position:fixed;bottom:1.4rem;left:1.6rem;z-index:300;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:rgba(61,217,192,.28);pointer-events:none;text-transform:uppercase">` to open terminal</div>
 
 <nav>
   <a href="#home" class="nl">
@@ -311,7 +423,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
     <li><a href="#certificates">Certs</a></li>
     <li><a href="#socials" class="hs">Socials</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><button class="tbtn" id="themeBtn" onclick="toggleTheme()">☀ Light</button></li>
+    <li><button class="tbtn" id="themeBtn" onclick="cycleTheme()">☀ Light</button></li>
   </ul>
 </nav>
 
@@ -320,8 +432,8 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
   <div class="hl">
     <div class="status-badge"><span class="status-dot"></span>Training @ Siemens COE · NITK Surathkal</div>
     <div class="htag">Electronics &amp; Communication · ECE</div>
-    <h1 class="hname">Ravishankar<span class="ac">Patel P S.</span></h1>
-    <p class="hsub">Trainee · Siemens COE · <strong>Optimist</strong></p>
+    <h1 class="hname">Ravishankar<span class="ac">Patel.</span></h1>
+    <p class="hsub"><span id="typedText"></span><span class="cursor"></span></p>
     <p class="hdesc">Learning industrial automation hands-on at <strong>Siemens COE, NITK Surathkal</strong> — working with PLC S7-1200, TIA Portal V18, and real factory systems. Diploma ECE student, planning to pursue engineering next.</p>
     <div class="hcta">
       <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_74161a2418224e94bfaca2da7efa65a9.pdf" target="_blank" class="btn bp">View Résumé</a>
@@ -364,6 +476,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 
 <!-- TICKER -->
 <div class="tw"><div class="tk">Factory Automation <span>✦</span> Mechatronics <span>✦</span> SCADA &amp; HMI <span>✦</span> PLC S7-1200 <span>✦</span> TIA Portal V18 <span>✦</span> Arduino · ESP32 · 8051 <span>✦</span> PCB Design <span>✦</span> C++ &amp; C# <span>✦</span> CAD Software <span>✦</span> Verilog <span>✦</span> Automation &amp; Robotics <span>✦</span> 90 WPM <span>✦</span> Factory Automation <span>✦</span> Mechatronics <span>✦</span> SCADA &amp; HMI <span>✦</span> PLC S7-1200 <span>✦</span> TIA Portal V18 <span>✦</span> Arduino · ESP32 · 8051 <span>✦</span> PCB Design <span>✦</span> C++ &amp; C# <span>✦</span> CAD Software <span>✦</span> Verilog <span>✦</span> Automation &amp; Robotics <span>✦</span> 90 WPM <span>✦</span></div></div>
+<div class="div-slash"></div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -391,6 +504,18 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 <section id="skills">
   <div class="lb si">// Skills</div>
   <h2 class="st si">What I<br>Know.</h2>
+  <!-- FLIP CARDS -->
+  <div class="skfl si">
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">88%</div><div class="skfc-name">PLC / TIA Portal</div></div><div class="skfc-b"><div class="skfc-desc">Used daily at Siemens COE on S7-1200 hardware</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">82%</div><div class="skfc-name">Factory Automation</div></div><div class="skfc-b"><div class="skfc-desc">Hands-on with live automation lines at NITK</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">78%</div><div class="skfc-name">Arduino / ESP32</div></div><div class="skfc-b"><div class="skfc-desc">Built multiple hardware projects with both platforms</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">75%</div><div class="skfc-name">SCADA &amp; HMI</div></div><div class="skfc-b"><div class="skfc-desc">Designing control interfaces during training</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">72%</div><div class="skfc-name">C++ / C#</div></div><div class="skfc-b"><div class="skfc-desc">Primary programming languages for embedded work</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">70%</div><div class="skfc-name">PCB Design</div></div><div class="skfc-b"><div class="skfc-desc">Designed and fabricated boards for 2 projects</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">65%</div><div class="skfc-name">CAD Software</div></div><div class="skfc-b"><div class="skfc-desc">Mechanical design support for project enclosures</div></div></div></div>
+    <div class="skfc"><div class="skfc-in"><div class="skfc-f"><div class="skfc-pct">60%</div><div class="skfc-name">Verilog / HTML</div></div><div class="skfc-b"><div class="skfc-desc">HDL basics + web skills powering this portfolio</div></div></div></div>
+  </div>
+  <p style="font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:2rem;opacity:.6">↑ Hover or tap cards to flip</p>
   <div class="skl">
     <div class="rb si"><svg id="radarSvg" width="300" height="300" viewBox="0 0 300 300"></svg></div>
     <div class="bars si" id="barsSection">
@@ -535,19 +660,118 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 </div>
 
 <footer>
-  <div class="fl">PSR<em>.</em></div>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+    <div class="fl">PSR<em>.</em></div>
+    <button id="mobileThemeBtn" onclick="cycleTheme()">☀ Light</button>
+  </div>
   <div class="fc">© 2026 Ravishankar Patel P S · All Rights Reserved</div>
-  <div class="ft" id="footer-live"></div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem">
+    <div class="ft" id="footer-live"></div>
+    <div id="visit-count" style="font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)">
+      <span style="color:var(--teal)">✦</span> <span id="vc-num">...</span> visits
+    </div>
+  </div>
 </footer>
 
 <script>
-/* THEME */
-function toggleTheme(){
-  const h=document.documentElement,b=document.getElementById('themeBtn');
-  const dark=h.getAttribute('data-theme')==='dark';
-  h.setAttribute('data-theme',dark?'light':'dark');
-  b.textContent=dark?'🌙 Dark':'☀ Light';
+/* THEME CYCLE: dark ↔ light only. Terminal accessible via terminal */
+function cycleTheme(){
+  const h=document.documentElement;
+  const b=document.getElementById('themeBtn');
+  const mb=document.getElementById('mobileThemeBtn');
+  const cur=h.getAttribute('data-theme')||'dark';
+  if(cur==='terminal'){h.setAttribute('data-theme','dark');b.textContent='☀ Light';mb.textContent='☀ Light';return;}
+  const next=cur==='dark'?'light':'dark';
+  h.setAttribute('data-theme',next);
+  const label=next==='dark'?'☀ Light':'🌙 Dark';
+  b.textContent=label; mb.textContent=label;
 }
+
+/* SCROLL PROGRESS BAR */
+window.addEventListener('scroll',()=>{
+  const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  document.getElementById('spb').style.width=pct+'%';
+},{passive:true});
+
+/* GLITCH on name — works on both hover (desktop) and tap (mobile) */
+/* glitch now CSS-driven — no JS needed */
+/* start glitch loop after entrance animation finishes */
+setTimeout(()=>{
+  const n=document.querySelector('.hname');
+  if(n) n.classList.add('glitch');
+},1800);
+
+/* TYPING ANIMATION in hero subtitle */
+(function(){
+  const el=document.getElementById('typedText');
+  if(!el)return;
+  const lines=['Trainee · Siemens COE','Optimist · Builder · Learner','Automation Enthusiast','Electronics · ECE'];
+  let li=0,ci=0,deleting=false;
+  function tick(){
+    const line=lines[li];
+    if(!deleting){
+      el.textContent=line.slice(0,++ci);
+      if(ci===line.length){deleting=true;setTimeout(tick,1800);return;}
+    } else {
+      el.textContent=line.slice(0,--ci);
+      if(ci===0){deleting=false;li=(li+1)%lines.length;setTimeout(tick,400);return;}
+    }
+    setTimeout(tick,deleting?45:72);
+  }
+  setTimeout(tick,800);
+})();
+
+/* SKILL CARD FLIP — tap to flip on mobile */
+document.querySelectorAll('.skfc').forEach(card=>{
+  card.addEventListener('click',()=>card.classList.toggle('flipped'));
+});
+
+/* TERMINAL EASTER EGG */
+const termCmds={
+  whoami:`<span style="color:#00ff41">ravishankar_patel_ps</span> — ECE Trainee @ Siemens COE, NITK Surathkal\nDiploma student · SDM Polytechnic, Ujire · Graduating 06/2026`,
+  skills:`<span style="color:#00ff41">SKILLS:</span>\n  PLC / TIA Portal ........... 88%\n  Factory Automation ......... 82%\n  Arduino / ESP32 / 8051 ..... 78%\n  SCADA & HMI ................ 75%\n  C++ / C# ................... 72%\n  PCB Design ................. 70%\n  CAD Software ............... 65%\n  Verilog / HTML ............. 60%`,
+  contact:`<span style="color:#00ff41">CONTACT:</span>\n  Run this command then click the contact section\n  or use the auth flow on the website.`,
+  projects:`<span style="color:#00ff41">PROJECTS:</span>\n  [01] Automated Medicine Dispenser\n  [02] MCAM — Motion Camera with Autonomous Mobility\n  [03] Advance Trends in ECE`,
+  social:`<span style="color:#00ff41">SOCIAL:</span>\n  Instagram  → @ravisnkr.patel\n  LinkedIn   → ravishankar-patel-1a775b374\n  Twitter/X  → @Ravishankar_ps\n  MonkeyType → ravisnkr_patel`,
+  help:`<span style="color:#00ff41">AVAILABLE COMMANDS:</span>\n  whoami    — who is this person\n  skills    — list all skills\n  projects  — project list\n  social    — social links\n  contact   — contact info\n  clear     — clear terminal\n  exit      — close terminal`,
+  clear:'__clear__',
+  exit:'__exit__'
+};
+function openTerm(){
+  const o=document.getElementById('termOverlay');
+  o.style.display='flex';
+  setTimeout(()=>o.style.opacity='1',10);
+  const out=document.getElementById('termOut');
+  out.innerHTML='<span style="opacity:.5">Welcome to PSR Terminal. Type <strong style="color:#00ff41">help</strong> to see commands.</span>\n';
+  document.getElementById('termIn').focus();
+}
+function closeTerm(){
+  const o=document.getElementById('termOverlay');
+  o.style.opacity='0';
+  setTimeout(()=>{o.style.display='none'},300);
+}
+document.getElementById('termOverlay').style.opacity='0';
+document.getElementById('termOverlay').style.transition='opacity .28s';
+document.getElementById('termIn').addEventListener('keydown',function(e){
+  if(e.key!=='Enter')return;
+  const val=this.value.trim().toLowerCase();
+  this.value='';
+  const out=document.getElementById('termOut');
+  if(!val)return;
+  out.innerHTML+=`\n<span style="opacity:.4">~/psr $</span> ${val}\n`;
+  const res=termCmds[val];
+  if(res==='__clear__'){out.innerHTML='';return;}
+  if(res==='__exit__'){closeTerm();return;}
+  out.innerHTML+=res?res+'\n':`<span style="color:#ff4444">command not found: ${val} — type 'help'</span>\n`;
+  out.scrollTop=out.scrollHeight;
+});
+// open with backtick on desktop, hidden button on mobile
+document.addEventListener('keydown',e=>{if(e.key==='`')openTerm()});
+// make hint tappable on mobile
+document.getElementById('termHint').style.pointerEvents='all';
+document.getElementById('termHint').style.cursor='pointer';
+document.getElementById('termHint').addEventListener('click',openTerm);
+document.getElementById('termHint').textContent='⌨ tap to open terminal';
 
 /* CURSOR — dot snaps, ring lags. pointer-events:none on both */
 (function(){
@@ -689,6 +913,26 @@ setTimeout(animBars,600);
   const items=document.querySelectorAll('.si');
   const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.remove('pre'),50);obs.unobserve(e.target)}})},{threshold:.05,rootMargin:'0px 0px -20px 0px'});
   items.forEach(el=>{const r=el.getBoundingClientRect();if(r.top>window.innerHeight*.92){el.classList.add('pre');obs.observe(el)}});
+})();
+
+/* VISIT COUNTER */
+(function(){
+  const numEl=document.getElementById('vc-num');
+  // Try counterapi.dev — free, no signup needed
+  fetch('https://api.counterapi.dev/v1/ravishankarpatel/visits/up')
+    .then(r=>r.json())
+    .then(d=>{
+      if(d&&d.count!=null){
+        numEl.textContent=Number(d.count).toLocaleString();
+      }
+    })
+    .catch(()=>{
+      // Fallback: try countapi
+      fetch('https://api.countapi.xyz/hit/ravishankarpatel.in/visits')
+        .then(r=>r.json())
+        .then(d=>{ if(d&&d.value) numEl.textContent=Number(d.value).toLocaleString(); })
+        .catch(()=>{ numEl.textContent='—'; });
+    });
 })();
 
 /* LIVE FOOTER CLOCK */
