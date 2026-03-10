@@ -316,13 +316,17 @@ section{padding:6rem 3rem}
 .cl:hover .cla{color:var(--red);transform:translateX(5px)}
 
 /* FOOTER */
-footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center}
+footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
 [data-theme="light"] footer{border-color:rgba(26,24,20,.08)}
 .fl{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em}
 .fl em{color:var(--red);font-style:normal}
 .fc{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.1em;color:rgba(242,240,235,.18);text-transform:uppercase}
 [data-theme="light"] .fc{color:rgba(0,0,0,.22)}
 .ft{font-family:'Space Mono',monospace;font-size:.53rem;letter-spacing:.12em;color:var(--teal);text-transform:uppercase}
+/* mobile footer theme toggle btn */
+#mobileThemeBtn{display:none;background:none;border:1px solid rgba(255,255,255,.18);padding:.35rem .8rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--mu);cursor:pointer;transition:all .22s}
+[data-theme="light"] #mobileThemeBtn{border-color:rgba(0,0,0,.18)}
+#mobileThemeBtn:hover{border-color:var(--teal);color:var(--teal)}
 
 @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fi{from{opacity:0}to{opacity:1}}
@@ -343,6 +347,13 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
   .pg,.cg,.socg,.ag{grid-template-columns:1fr}
   nav{padding:1rem 1.5rem}ul.nv{gap:.9rem}
   section{padding:4rem 1.5rem}
+}
+@media(max-width:680px){
+  footer{flex-direction:column;align-items:flex-start;padding:1.4rem 1.5rem;gap:.6rem}
+  .fc{font-size:.48rem}
+  #mobileThemeBtn{display:block}
+  #visit-count{display:block!important}
+  #footer-live{font-size:.48rem}
 }
 @media(max-width:580px){.hs{display:none}}
 </style>
@@ -632,12 +643,15 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 </div>
 
 <footer>
-  <div class="fl">PSR<em>.</em></div>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+    <div class="fl">PSR<em>.</em></div>
+    <button id="mobileThemeBtn" onclick="cycleTheme()">☀ Light</button>
+  </div>
   <div class="fc">© 2026 Ravishankar Patel P S · All Rights Reserved</div>
-  <div style="display:flex;align-items:center;gap:1.2rem">
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem">
     <div class="ft" id="footer-live"></div>
-    <div id="visit-count" style="font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);display:none">
-      <span style="color:var(--teal)">✦</span> <span id="vc-num">—</span> visits
+    <div id="visit-count" style="font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)">
+      <span style="color:var(--teal)">✦</span> <span id="vc-num">...</span> visits
     </div>
   </div>
 </footer>
@@ -645,12 +659,15 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 <script>
 /* THEME CYCLE: dark ↔ light only. Terminal accessible via terminal */
 function cycleTheme(){
-  const h=document.documentElement,b=document.getElementById('themeBtn');
+  const h=document.documentElement;
+  const b=document.getElementById('themeBtn');
+  const mb=document.getElementById('mobileThemeBtn');
   const cur=h.getAttribute('data-theme')||'dark';
-  if(cur==='terminal'){h.setAttribute('data-theme','dark');b.textContent='☀ Light';return;}
+  if(cur==='terminal'){h.setAttribute('data-theme','dark');b.textContent='☀ Light';mb.textContent='☀ Light';return;}
   const next=cur==='dark'?'light':'dark';
   h.setAttribute('data-theme',next);
-  b.textContent=next==='dark'?'☀ Light':'🌙 Dark';
+  const label=next==='dark'?'☀ Light':'🌙 Dark';
+  b.textContent=label; mb.textContent=label;
 }
 
 /* SCROLL PROGRESS BAR */
@@ -886,18 +903,24 @@ setTimeout(animBars,600);
   items.forEach(el=>{const r=el.getBoundingClientRect();if(r.top>window.innerHeight*.92){el.classList.add('pre');obs.observe(el)}});
 })();
 
-/* VISIT COUNTER — uses countapi.xyz, hides gracefully if offline */
+/* VISIT COUNTER */
 (function(){
-  try{
-    fetch('https://api.countapi.xyz/hit/ravishankarpatel.in/visits')
-      .then(r=>r.json())
-      .then(d=>{
-        if(d&&d.value){
-          document.getElementById('vc-num').textContent=d.value.toLocaleString();
-          document.getElementById('visit-count').style.display='block';
-        }
-      }).catch(()=>{});
-  }catch(e){}
+  const numEl=document.getElementById('vc-num');
+  // Try counterapi.dev — free, no signup needed
+  fetch('https://api.counterapi.dev/v1/ravishankarpatel/visits/up')
+    .then(r=>r.json())
+    .then(d=>{
+      if(d&&d.count!=null){
+        numEl.textContent=Number(d.count).toLocaleString();
+      }
+    })
+    .catch(()=>{
+      // Fallback: try countapi
+      fetch('https://api.countapi.xyz/hit/ravishankarpatel.in/visits')
+        .then(r=>r.json())
+        .then(d=>{ if(d&&d.value) numEl.textContent=Number(d.value).toLocaleString(); })
+        .catch(()=>{ numEl.textContent='—'; });
+    });
 })();
 
 /* LIVE FOOTER CLOCK */
