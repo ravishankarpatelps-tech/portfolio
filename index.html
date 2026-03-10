@@ -485,6 +485,10 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
     <div class="stt"><div class="sn t">8+</div><div class="sl">Certificates</div></div>
     <div class="stt"><div class="sn" style="font-size:1.9rem;color:var(--gold)">NITK</div><div class="sl">Siemens COE Intern</div></div>
     <div class="stt"><div class="sn">90</div><div class="sl">WPM Typing</div></div>
+    <div class="stt" style="grid-column:1/-1;background:var(--s2)">
+      <div class="sl" style="margin-bottom:.5rem">// Age — live</div>
+      <div id="age-ticker" style="font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--teal);line-height:2">—</div>
+    </div>
   </div>
   <div class="at si">
     <div class="lb">// About Me</div>
@@ -943,6 +947,39 @@ setTimeout(animBars,600);
     const now=new Date();
     const t=now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Asia/Kolkata'});
     el.textContent='// NITK Surathkal · IST '+t;
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* LIVE AGE TICKER — DOB: 02 Jan 2008 */
+(function(){
+  const el=document.getElementById('age-ticker');
+  if(!el)return;
+  const dob=new Date('2008-01-02T00:00:00');
+  function pad(n,len=2){return String(n).padStart(len,'0')}
+  function tick(){
+    const now=new Date();
+    const diff=now-dob;
+    const totalSec=Math.floor(diff/1000);
+    const s=totalSec%60;
+    const totalMin=Math.floor(totalSec/60);
+    const m=totalMin%60;
+    const totalHrs=Math.floor(totalMin/60);
+    const h=totalHrs%24;
+    const totalDays=Math.floor(totalHrs/24);
+    const d=totalDays%365;
+    const y=Math.floor(totalDays/365);
+    el.innerHTML=
+      `<span style="color:var(--fg);font-size:1.4rem;font-family:'Bebas Neue',cursive">${y}</span>`+
+      `<span style="color:var(--mu)"> yrs &nbsp;</span>`+
+      `<span style="color:var(--fg)">${pad(d,3)}</span>`+
+      `<span style="color:var(--mu)"> days &nbsp;</span>`+
+      `<span style="color:var(--teal)">${pad(h)}</span>`+
+      `<span style="color:var(--mu)">h </span>`+
+      `<span style="color:var(--teal)">${pad(m)}</span>`+
+      `<span style="color:var(--mu)">m </span>`+
+      `<span style="color:var(--red)">${pad(s)}</span>`+
+      `<span style="color:var(--mu)">s</span>`;
   }
   tick();setInterval(tick,1000);
 })();
