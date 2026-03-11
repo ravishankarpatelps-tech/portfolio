@@ -254,8 +254,8 @@ section{padding:6rem 3rem}
 #contact{background:var(--s1);display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center}
 
 /* AUTH MODAL */
-.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(6px)}
-.auth-overlay.show{opacity:1;pointer-events:all}
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;visibility:hidden;transition:opacity .28s,visibility .28s;backdrop-filter:blur(6px)}
+.auth-overlay.show{opacity:1;pointer-events:all;visibility:visible}
 .auth-box{background:var(--s1);border:1px solid rgba(255,255,255,.08);max-width:400px;width:90%;padding:2.4rem 2rem;position:relative;transform:translateY(16px);transition:transform .28s}
 .auth-overlay.show .auth-box{transform:translateY(0)}
 [data-theme="light"] .auth-box{border-color:rgba(26,24,20,.1);box-shadow:0 8px 40px rgba(26,24,20,.12)}
@@ -776,13 +776,13 @@ document.querySelectorAll('#barsSection,.lgs').forEach(el=>barObs.observe(el));
 /* AUTH MODAL */
 const _p=atob('KzkxIDc3OTU0MDUyOTI='),_g=atob('cmF2aXNoYW5rYXJwYXRlbHBzQGdtYWlsLmNvbQ=='),_i=atob('cHNyYXZpc2hhbmthcnBhdGVsQGljbG91ZC5jb20=');
 let authTarget='',mathAnswer=0,selReason='';
-function openAuth(t){const o=document.getElementById('authOverlay');authTarget=t;selReason='';document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));document.getElementById('nextBtn').disabled=true;o.style.display='';o.style.opacity='';o.style.pointerEvents='';showStep(1);o.classList.add('show');}
-function closeAuth(){const o=document.getElementById('authOverlay');o.classList.remove('show');o.style.opacity='0';o.style.pointerEvents='none';}
-function closeAuthInstant(){const o=document.getElementById('authOverlay');o.classList.remove('show');o.style.opacity='0';o.style.pointerEvents='none';o.style.display='none';}
+function openAuth(t){const o=document.getElementById('authOverlay');authTarget=t;selReason='';document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));document.getElementById('nextBtn').disabled=true;showStep(1);o.style.visibility='';o.style.opacity='';o.classList.add('show');}
+function closeAuth(){document.getElementById('authOverlay').classList.remove('show');}
+function closeAuthInstant(){const o=document.getElementById('authOverlay');o.classList.remove('show');o.style.visibility='hidden';o.style.opacity='0';}
 function showStep(n){document.querySelectorAll('.auth-step').forEach((s,i)=>{s.classList.toggle('active',i===n-1);});document.querySelectorAll('.auth-prog-dot').forEach((d,i)=>{d.classList.toggle('done',i<n-1);d.classList.toggle('active',i===n-1);});if(n===2)generateMath();}
 function selectReason(el){selReason=el.textContent.trim();document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');document.getElementById('nextBtn').disabled=false;}
 function nextStep(){if(!selReason)return;showStep(2);}
-function generateMath(){const a=Math.floor(Math.random()*12)+1,b=Math.floor(Math.random()*12)+1,ops=['+','-','×'];const op=ops[Math.floor(Math.random()*ops.length)];mathAnswer=op==='+'?a+b:op==='-'?a-b:a*b;document.getElementById('mathQ').textContent=`${a} ${op} ${b} =`;document.getElementById('mathAns').value='';document.getElementById('mathErr').textContent='';}
+function generateMath(){const a=Math.floor(Math.random()*12)+1,b=Math.floor(Math.random()*12)+1,ops=['+','-','×'];const op=ops[Math.floor(Math.random()*ops.length)];mathAnswer=op==='+'?a+b:op==='-'?a-b:a*b;document.getElementById('mathQ').textContent=`${a} ${op} ${b}`;document.getElementById('mathAns').value='';document.getElementById('mathErr').textContent='';}
 function clearErr(){document.getElementById('mathErr').textContent='';}
 function revealDisplay(t){if(t==='phone'){document.getElementById('pill-phone').textContent='📞 '+_p;document.getElementById('phone-val').textContent=_p;}else if(t==='gmail'){document.getElementById('pill-gmail').textContent='✉ '+_g;document.getElementById('gmail-val').textContent=_g;}else if(t==='icloud'){document.getElementById('pill-icloud').textContent='✉ '+_i;document.getElementById('icloud-val').textContent=_i;}}
 function checkMath(){
