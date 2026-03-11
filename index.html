@@ -857,9 +857,9 @@ function checkMath(){
   revealDisplay(target);
   closeAuth();
   setTimeout(()=>{
-    if(target==='phone') window.location.href='tel:'+_p;
-    else if(target==='gmail') window.location.href='mailto:'+_g;
-    else if(target==='icloud') window.location.href='mailto:'+_i;
+    if(target==='phone') window.open('tel:'+_p,'_self');
+    else if(target==='gmail') window.open('mailto:'+_g,'_blank');
+    else if(target==='icloud') window.open('mailto:'+_i,'_blank');
   }, 400);
 }
 function revealDisplay(t){
