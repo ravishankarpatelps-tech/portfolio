@@ -373,6 +373,41 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
   #footer-live{font-size:.48rem}
 }
 @media(max-width:580px){.hs{display:none}}
+/* LINKTREE MODAL */
+#ltOverlay{position:fixed;inset:0;z-index:3000;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s}
+#ltOverlay.show{opacity:1;pointer-events:all}
+#ltOverlay .lt-bg{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px)}
+#ltDrawer{position:relative;z-index:1;width:min(420px,100vw);max-height:92vh;overflow-y:auto;background:#080808;border:1px solid #1e1e1e;border-bottom:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s cubic-bezier(.32,0,.15,1);padding-bottom:env(safe-area-inset-bottom)}
+#ltOverlay.show #ltDrawer{transform:translateY(0)}
+.lt-handle{width:40px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:12px auto 0}
+.lt-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 8px}
+.lt-logo{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--red);opacity:.7}
+.lt-close{background:none;border:1px solid #1e1e1e;color:rgba(255,255,255,.4);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lt-close:hover{border-color:var(--red);color:var(--red)}
+.lt-profile{display:flex;flex-direction:column;align-items:center;padding:8px 20px 20px;gap:10px}
+.lt-avatar-ring{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--red),#8b0000);padding:2px;display:flex;align-items:center;justify-content:center;position:relative}
+.lt-avatar-inner{width:100%;height:100%;border-radius:50%;background:#131313;display:flex;align-items:center;justify-content:center;font-size:26px}
+.lt-dot{position:absolute;bottom:2px;right:2px;width:13px;height:13px;background:#3dd9c0;border-radius:50%;border:2px solid #080808}
+.lt-name{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:.06em;color:var(--fg)}
+.lt-name span{color:var(--red)}
+.lt-tag{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.12em;color:rgba(242,240,235,.3);text-transform:uppercase;text-align:center;line-height:1.7}
+.lt-divider{width:calc(100% - 40px);margin:0 20px 16px;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:.25}
+.lt-links{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+.lt-link{display:flex;align-items:center;gap:12px;background:#131313;border:1px solid #1e1e1e;border-left:3px solid transparent;border-radius:6px;padding:12px 14px;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--fg)}
+.lt-link:hover{border-left-color:var(--red);border-color:rgba(232,50,26,.3);transform:translateX(3px)}
+.lt-link.teal:hover{border-left-color:var(--teal);border-color:rgba(61,217,192,.3)}
+.lt-icon{width:30px;height:30px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid #1e1e1e;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.lt-lbl{flex:1;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.lt-arr{font-size:.7rem;color:rgba(242,240,235,.18);transition:color .2s,transform .2s}
+.lt-link:hover .lt-arr{color:var(--red);transform:translateX(2px)}
+.lt-link.teal:hover .lt-arr{color:var(--teal)}
+.lt-footer{padding:20px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.lt-footer-tag{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,240,235,.12)}
+.lt-bar{width:36px;height:2px;background:var(--red);border-radius:1px;opacity:.35}
+.lt-ticker{background:var(--red);padding:7px 0;overflow:hidden;white-space:nowrap}
+.lt-ticker-in{display:inline-flex;animation:tick 18s linear infinite}
+.lt-ticker-in span{font-family:'Bebas Neue',cursive;font-size:.75rem;letter-spacing:.14em;color:rgba(10,10,10,.65);padding:0 16px}
+.lt-ticker-in span::after{content:'✦';margin-left:16px;font-size:.6rem}
 </style>
 </head>
 <body>
@@ -397,6 +432,47 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
 </div>
 
 <!-- TERMINAL HINT (bottom left, subtle) -->
+<!-- LINKTREE MODAL -->
+<div id="ltOverlay">
+  <div class="lt-bg" onclick="closeLinktree()"></div>
+  <div id="ltDrawer">
+    <div class="lt-handle"></div>
+    <div class="lt-topbar">
+      <div class="lt-logo">✳ LINKTREE</div>
+      <button class="lt-close" onclick="closeLinktree()">✕</button>
+    </div>
+    <div class="lt-profile">
+      <div class="lt-avatar-ring">
+        <div class="lt-avatar-inner">🕷️</div>
+        <div class="lt-dot"></div>
+      </div>
+      <div class="lt-name">@ravishankar<span>.patel</span></div>
+      <div class="lt-tag">Automation Enthusiast · ECE · NITK Surathkal<br>PLC · TIA Portal · SCADA · Arduino</div>
+    </div>
+    <div class="lt-divider"></div>
+    <div class="lt-links">
+      <a class="lt-link" href="https://ravishankarpatel.in" target="_blank"><div class="lt-icon">👤</div><div class="lt-lbl">Portfolio Website</div><div class="lt-arr">→</div></a>
+      <a class="lt-link" href="https://discord.com/users/1306866565861343283" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.3 4.4A19.3 19.3 0 0015 2.8a.07.07 0 00-.07.04c-.3.52-.63 1.2-.86 1.74a17.8 17.8 0 00-5.34 0 13.5 13.5 0 00-.87-1.74.07.07 0 00-.07-.04 19.2 19.2 0 00-5.3 1.6.07.07 0 00-.03.03C.57 9.1-.34 13.7.1 18.25a.08.08 0 00.03.05 19.4 19.4 0 005.85 2.96.07.07 0 00.08-.03c.45-.62.86-1.27 1.2-1.96a.07.07 0 00-.04-.1 12.8 12.8 0 01-1.82-.87.07.07 0 010-.12l.36-.29a.07.07 0 01.07-.01c3.82 1.74 7.96 1.74 11.74 0a.07.07 0 01.07.01l.36.29a.07.07 0 010 .12 12 12 0 01-1.83.87.07.07 0 00-.04.1c.35.69.75 1.34 1.2 1.96a.07.07 0 00.08.03 19.3 19.3 0 005.86-2.96.07.07 0 00.03-.05c.5-5.18-.84-9.68-3.55-13.68a.06.06 0 00-.03-.03z"/></svg></div><div class="lt-lbl">Discord</div><div class="lt-arr">→</div></a>
+      <a class="lt-link teal" href="https://steamcommunity.com/id/ravishankarpatel" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="#3dd9c0"><path d="M18.98 2H5.02A3 3 0 002 5v14a3 3 0 003.02 3h13.96A3 3 0 0022 19V5a3 3 0 00-3.02-3zM8 17H5.5v-7H8v7zm-1.25-8.27a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM19 17h-2.5v-3.63c0-2.27-2.75-2.1-2.75 0V17H11.25v-7h2.5v1.3C14.8 9.1 19 8.94 19 12.9V17z"/></svg></div><div class="lt-lbl">Steam</div><div class="lt-arr">→</div></a>
+      <a class="lt-link" href="https://open.spotify.com/user/31ctoksdke4hctld4qtsbujbgyo4" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.54-1.26.24-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-.96-.12-1.08-.6-.12-.48.12-.96.6-1.08 4.38-1.32 9.78-.66 13.5 1.62.36.3.54.84.18 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.66 1.02.36 1.56-.3.42-1.02.54-1.5.3z"/></svg></div><div class="lt-lbl">Spotify Playlists</div><div class="lt-arr">→</div></a>
+      <a class="lt-link teal" href="https://www.linkedin.com/in/ravishankarpatelps/" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><div class="lt-lbl">LinkedIn</div><div class="lt-arr">→</div></a>
+      <a class="lt-link" href="https://www.instagram.com/ravisnkr.patel/" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="url(#ig2)"><defs><linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="lt-lbl">Instagram</div><div class="lt-arr">→</div></a>
+      <a class="lt-link teal" href="https://monkeytype.com/profile/ravisnkr_patel" target="_blank"><div class="lt-icon">⌨️</div><div class="lt-lbl">Monkeytype · Typing Stats</div><div class="lt-arr">→</div></a>
+      <a class="lt-link" href="https://x.com/Ravishankar_ps" target="_blank"><div class="lt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div><div class="lt-lbl">X / Twitter</div><div class="lt-arr">→</div></a>
+      <a class="lt-link teal" href="https://music.apple.com/profile/ravishankarOO7" target="_blank"><div class="lt-icon" style="color:#fc3c44;font-size:14px;font-weight:700">♫</div><div class="lt-lbl">Apple Music</div><div class="lt-arr">→</div></a>
+    </div>
+    <div class="lt-footer">
+      <div class="lt-bar"></div>
+      <div class="lt-footer-tag">ravishankarpatel.in</div>
+    </div>
+    <div class="lt-ticker">
+      <div class="lt-ticker-in">
+        <span>Automation</span><span>PLC S7-1200</span><span>TIA Portal</span><span>SCADA & HMI</span><span>Arduino</span><span>PCB Design</span><span>ECE · NITK</span><span>Automation</span><span>PLC S7-1200</span><span>TIA Portal</span><span>SCADA & HMI</span><span>Arduino</span><span>PCB Design</span><span>ECE · NITK</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="termHint" style="position:fixed;bottom:1.4rem;left:1.6rem;z-index:300;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:rgba(61,217,192,.28);pointer-events:none;text-transform:uppercase">` to open terminal</div>
 
 <nav>
@@ -597,7 +673,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
     <a href="https://www.linkedin.com/in/ravishankar-patel-1a775b374" target="_blank" class="scard si"><div class="sic" style="color:var(--teal)">in</div><div class="sin"><div class="slb">LinkedIn</div><div class="sh">Ravishankar Patel</div></div><div class="sar">→</div></a>
     <a href="https://x.com/Ravishankar_ps" target="_blank" class="scard si"><div class="sic" style="color:var(--fg)">𝕏</div><div class="sin"><div class="slb">Twitter / X</div><div class="sh">@Ravishankar_ps</div></div><div class="sar">→</div></a>
     <a href="http://discordapp.com/users/1306866565861343283" target="_blank" class="scard si"><div class="sic" style="color:#5865F2">DC</div><div class="sin"><div class="slb">Discord</div><div class="sh">ravisnkr#patel</div></div><div class="sar">→</div></a>
-    <a href="https://linktr.ee/ravishankar.patel" target="_blank" class="scard si"><div class="sic" style="color:#39e09b">LT</div><div class="sin"><div class="slb">Linktree</div><div class="sh">ravishankar.patel</div></div><div class="sar">→</div></a>
+    <a href="#" onclick="openLinktree(event)" class="scard si"><div class="sic" style="color:#39e09b">LT</div><div class="sin"><div class="slb">Linktree</div><div class="sh">ravishankar.patel</div></div><div class="sar">→</div></a>
     <a href="https://open.spotify.com/user/31ctoksdke4hctld4qtsbujbgyo4" target="_blank" class="scard si"><div class="sic" style="color:#1DB954">SP</div><div class="sin"><div class="slb">Spotify</div><div class="sh">My Playlists</div></div><div class="sar">→</div></a>
     <a href="https://monkeytype.com/profile/ravisnkr_patel" target="_blank" class="scard si"><div class="sic" style="color:var(--gold)">MT</div><div class="sin"><div class="slb">MonkeyType</div><div class="sh">ravisnkr_patel</div></div><div class="sar">→</div></a>
     <a href="https://ravishankarpatel123.wixsite.com/portfolio" target="_blank" class="scard si"><div class="sic" style="color:var(--teal)">WX</div><div class="sin"><div class="slb">Wix Portfolio</div><div class="sh">ravishankarpatel123.wixsite.com</div></div><div class="sar">→</div></a>
@@ -900,13 +976,23 @@ document.getElementById('pill-icloud').addEventListener('click',e=>{e.preventDef
   svg.innerHTML=out;
 })();
 
-/* BARS — animate into view */
+/* BARS — animate into view on scroll */
 function animBars(){
-  document.querySelectorAll('.brow').forEach(r=>{const f=r.querySelector('.bfi');if(f)f.style.width=(r.dataset.pct||0)+'%'});
-  document.querySelectorAll('.lr').forEach(r=>{const f=r.querySelector('.lfi');if(f)f.style.width=(r.dataset.pct||0)+'%'});
+  document.querySelectorAll('.brow').forEach((r,i)=>{
+    const f=r.querySelector('.bfi');
+    if(f){f.style.transition='none';f.style.width='0%';requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.transition='width 1.3s cubic-bezier(.4,0,.2,1) '+(i*80)+'ms';f.style.width=(r.dataset.pct||0)+'%';}));}
+  });
+  document.querySelectorAll('.lr').forEach((r,i)=>{
+    const f=r.querySelector('.lfi');
+    if(f){f.style.transition='none';f.style.width='0%';requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.transition='width 1.4s cubic-bezier(.4,0,.2,1) '+(i*120)+'ms';f.style.width=(r.dataset.pct||0)+'%';}));}
+  });
 }
-new IntersectionObserver(e=>{if(e[0].isIntersecting){animBars()}},{threshold:.08}).observe(document.getElementById('skills'));
-setTimeout(animBars,600);
+new IntersectionObserver(e=>{
+  if(e[0].isIntersecting) animBars();
+  else{
+    document.querySelectorAll('.bfi,.lfi').forEach(f=>{f.style.transition='none';f.style.width='0%';});
+  }
+},{threshold:.1}).observe(document.getElementById('skills'));
 
 /* SCROLL ANIMATIONS — safe: elements are visible by default */
 (function(){
@@ -951,6 +1037,12 @@ setTimeout(animBars,600);
 /* NAV ACTIVE */
 const secs=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('ul.nv a');
 window.addEventListener('scroll',()=>{let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id});navAs.forEach(a=>{a.classList.toggle('act',a.getAttribute('href')==='#'+cur)})},{passive:true});
+/* LINKTREE MODAL */
+function openLinktree(e){e.preventDefault();const o=document.getElementById('ltOverlay');o.style.display='flex';requestAnimationFrame(()=>o.classList.add('show'));document.body.style.overflow='hidden';}
+function closeLinktree(){const o=document.getElementById('ltOverlay');o.classList.remove('show');setTimeout(()=>{o.style.display='none';document.body.style.overflow='';},400);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLinktree();});
+// init hidden
+document.getElementById('ltOverlay').style.display='none';
 </script>
 </body>
 </html>
