@@ -338,7 +338,7 @@ footer{flex-direction:column;align-items:flex-start;padding:1.4rem 1.5rem;gap:.6
 #visit-count{display:block!important}
 #footer-live{font-size:.48rem}
 }
-@media(max-width:580px){.hs{display:none}}
+@media(hover:none){#cd,#cr{display:none!important}}
 </style>
 
 </head>
@@ -652,14 +652,17 @@ footer{flex-direction:column;align-items:flex-start;padding:1.4rem 1.5rem;gap:.6
 
 <script>
 /* THEME — dark ↔ light, terminal via terminal cmd */
+// On load, restore saved theme (default dark)
+(function(){const t=localStorage.getItem('psr-theme')||'dark';document.documentElement.setAttribute('data-theme',t);const b=document.getElementById('themeBtn'),mb=document.getElementById('mobileThemeBtn');const lbl=t==='dark'?'☀ Light':t==='light'?'🌙 Dark':'⬛ Exit';if(b)b.textContent=lbl;if(mb)mb.textContent=lbl;})();
 function cycleTheme(){
   const h=document.documentElement,b=document.getElementById('themeBtn'),mb=document.getElementById('mobileThemeBtn');
   const cur=h.getAttribute('data-theme')||'dark';
-  if(cur==='terminal'){h.setAttribute('data-theme','dark');b.textContent='☀ Light';mb.textContent='☀ Light';return;}
+  if(cur==='terminal'){h.setAttribute('data-theme','dark');b.textContent='☀ Light';mb.textContent='☀ Light';localStorage.setItem('psr-theme','dark');return;}
   const next=cur==='dark'?'light':'dark';
   h.setAttribute('data-theme',next);
   const lbl=next==='dark'?'☀ Light':'🌙 Dark';
   b.textContent=lbl;mb.textContent=lbl;
+  localStorage.setItem('psr-theme',next);
 }
 
 /* SCROLL PROGRESS */
@@ -795,6 +798,7 @@ function showStep(n){document.querySelectorAll('.auth-step').forEach((s,i)=>{s.c
 function selectReason(el){selReason=el.textContent.trim();document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');document.getElementById('nextBtn').disabled=false;}
 function nextStep(){if(!selReason)return;showStep(2);}
 function generateMath(){const a=Math.floor(Math.random()*12)+1,b=Math.floor(Math.random()*12)+1,ops=['+','-','×'];const op=ops[Math.floor(Math.random()*ops.length)];mathAnswer=op==='+'?a+b:op==='-'?a-b:a*b;document.getElementById('mathQ').textContent=`${a} ${op} ${b} =`;document.getElementById('mathAns').value='';document.getElementById('mathErr').textContent='';}
+function clearErr(){document.getElementById('mathErr').textContent='';}
 function revealDisplay(t){if(t==='phone'){document.getElementById('pill-phone').textContent='📞 '+_p;document.getElementById('phone-val').textContent=_p;}else if(t==='gmail'){document.getElementById('pill-gmail').textContent='✉ '+_g;document.getElementById('gmail-val').textContent=_g;}else if(t==='icloud'){document.getElementById('pill-icloud').textContent='✉ '+_i;document.getElementById('icloud-val').textContent=_i;}}
 function checkMath(){const val=parseInt(document.getElementById('mathAns').value);if(isNaN(val)){document.getElementById('mathErr').textContent='Enter a number';return;}if(val!==mathAnswer){document.getElementById('mathErr').textContent='Wrong — try again';document.getElementById('mathAns').classList.add('wrong');setTimeout(()=>{document.getElementById('mathAns').classList.remove('wrong');generateMath();document.getElementById('mathAns').value='';},800);return;}revealDisplay(authTarget);closeAuth();setTimeout(()=>{if(authTarget==='phone')window.location.href='tel:'+_p;else if(authTarget==='gmail')window.location.href='mailto:'+_g;else if(authTarget==='icloud')window.location.href='mailto:'+_i;},400);}
 document.getElementById('mathAns').addEventListener('keydown',e=>{if(e.key==='Enter')checkMath();});
