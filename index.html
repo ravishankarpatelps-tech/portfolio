@@ -776,15 +776,33 @@ document.querySelectorAll('#barsSection,.lgs').forEach(el=>barObs.observe(el));
 /* AUTH MODAL */
 const _p=atob('KzkxIDc3OTU0MDUyOTI='),_g=atob('cmF2aXNoYW5rYXJwYXRlbHBzQGdtYWlsLmNvbQ=='),_i=atob('cHNyYXZpc2hhbmthcnBhdGVsQGljbG91ZC5jb20=');
 let authTarget='',mathAnswer=0,selReason='';
-function openAuth(t){authTarget=t;selReason='';document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));document.getElementById('nextBtn').disabled=true;showStep(1);document.getElementById('authOverlay').classList.add('show');}
-function closeAuth(){document.getElementById('authOverlay').classList.remove('show');}
+function openAuth(t){const o=document.getElementById('authOverlay');authTarget=t;selReason='';document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));document.getElementById('nextBtn').disabled=true;o.style.display='';o.style.opacity='';o.style.pointerEvents='';showStep(1);o.classList.add('show');}
+function closeAuth(){const o=document.getElementById('authOverlay');o.classList.remove('show');o.style.opacity='0';o.style.pointerEvents='none';}
+function closeAuthInstant(){const o=document.getElementById('authOverlay');o.classList.remove('show');o.style.opacity='0';o.style.pointerEvents='none';o.style.display='none';}
 function showStep(n){document.querySelectorAll('.auth-step').forEach((s,i)=>{s.classList.toggle('active',i===n-1);});document.querySelectorAll('.auth-prog-dot').forEach((d,i)=>{d.classList.toggle('done',i<n-1);d.classList.toggle('active',i===n-1);});if(n===2)generateMath();}
 function selectReason(el){selReason=el.textContent.trim();document.querySelectorAll('.auth-reason').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');document.getElementById('nextBtn').disabled=false;}
 function nextStep(){if(!selReason)return;showStep(2);}
 function generateMath(){const a=Math.floor(Math.random()*12)+1,b=Math.floor(Math.random()*12)+1,ops=['+','-','×'];const op=ops[Math.floor(Math.random()*ops.length)];mathAnswer=op==='+'?a+b:op==='-'?a-b:a*b;document.getElementById('mathQ').textContent=`${a} ${op} ${b} =`;document.getElementById('mathAns').value='';document.getElementById('mathErr').textContent='';}
 function clearErr(){document.getElementById('mathErr').textContent='';}
 function revealDisplay(t){if(t==='phone'){document.getElementById('pill-phone').textContent='📞 '+_p;document.getElementById('phone-val').textContent=_p;}else if(t==='gmail'){document.getElementById('pill-gmail').textContent='✉ '+_g;document.getElementById('gmail-val').textContent=_g;}else if(t==='icloud'){document.getElementById('pill-icloud').textContent='✉ '+_i;document.getElementById('icloud-val').textContent=_i;}}
-function checkMath(){const val=parseInt(document.getElementById('mathAns').value);if(isNaN(val)){document.getElementById('mathErr').textContent='Enter a number';return;}if(val!==mathAnswer){document.getElementById('mathErr').textContent='Wrong — try again';document.getElementById('mathAns').classList.add('wrong');setTimeout(()=>{document.getElementById('mathAns').classList.remove('wrong');generateMath();document.getElementById('mathAns').value='';},800);return;}revealDisplay(authTarget);closeAuth();setTimeout(()=>{if(authTarget==='phone')window.location.href='tel:'+_p;else if(authTarget==='gmail')window.location.href='mailto:'+_g;else if(authTarget==='icloud')window.location.href='mailto:'+_i;},400);}
+function checkMath(){
+  const val=parseInt(document.getElementById('mathAns').value);
+  if(isNaN(val)){document.getElementById('mathErr').textContent='Enter a number';return;}
+  if(val!==mathAnswer){
+    document.getElementById('mathErr').textContent='Wrong — try again';
+    document.getElementById('mathAns').classList.add('wrong');
+    setTimeout(()=>{document.getElementById('mathAns').classList.remove('wrong');generateMath();document.getElementById('mathAns').value='';},800);
+    return;
+  }
+  // correct — reveal text, CLOSE IMMEDIATELY, then open link
+  revealDisplay(authTarget);
+  closeAuthInstant();
+  setTimeout(()=>{
+    if(authTarget==='phone') window.location.href='tel:'+_p;
+    else if(authTarget==='gmail') window.location.href='mailto:'+_g;
+    else if(authTarget==='icloud') window.location.href='mailto:'+_i;
+  },300);
+}
 document.getElementById('mathAns').addEventListener('keydown',e=>{if(e.key==='Enter')checkMath();});
 document.getElementById('authOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('authOverlay'))closeAuth();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
