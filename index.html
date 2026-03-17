@@ -512,7 +512,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 3rem;display:fl
     <p class="hsub"><span id="typedText"></span><span class="cursor"></span></p>
     <p class="hdesc">Learning industrial automation hands-on at <strong>Siemens COE, NITK Surathkal</strong> — working with PLC S7-1200, TIA Portal V18, and real factory systems. Diploma ECE student, planning to pursue engineering next.</p>
     <div class="hcta">
-      <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf" target="_blank" class="btn bp">View Résumé</a>
+      <a href="#" onclick="openAuth('resume');return false;" class="btn bp">View Résumé</a>
       <a href="#projects" class="btn bo">My Projects</a>
     </div>
   </div>
@@ -885,9 +885,18 @@ function openAuth(target){
   document.getElementById('nextBtn').disabled=true;
   document.getElementById('mathAns').value='';
   document.getElementById('mathErr').textContent='';
-  showStep(1);
-  document.getElementById('authOverlay').classList.add('show');
-  document.body.style.overflow='hidden';
+  if(target==='resume'){
+    // skip reason step — go straight to captcha
+    document.querySelector('.auth-btn[onclick="checkMath()"]').textContent='Open Résumé ↗';
+    document.getElementById('authOverlay').classList.add('show');
+    document.body.style.overflow='hidden';
+    showStep(2);
+  } else {
+    document.querySelector('.auth-btn[onclick="checkMath()"]').textContent='Reveal Contact ↗';
+    showStep(1);
+    document.getElementById('authOverlay').classList.add('show');
+    document.body.style.overflow='hidden';
+  }
 }
 function closeAuth(){
   document.getElementById('authOverlay').classList.remove('show');
@@ -936,11 +945,10 @@ function checkMath(){
   const target = authTarget;
   revealDisplay(target);
   closeAuth();
-  setTimeout(()=>{
-    if(target==='phone') window.open('tel:'+_p,'_self');
-    else if(target==='gmail') window.open('mailto:'+_g,'_blank');
-    else if(target==='icloud') window.open('mailto:'+_i,'_blank');
-  }, 400);
+  // only open link for resume — contacts just reveal, no auto-dial/mail
+  if(target==='resume'){
+    setTimeout(()=>{ window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf','_blank'); }, 300);
+  }
 }
 function revealDisplay(t){
   if(t==='phone'){
