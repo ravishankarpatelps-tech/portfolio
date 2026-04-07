@@ -8,6 +8,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230a0a0a'/%3E%3Cline x1='14' y1='54' x2='26' y2='10' stroke='%23e8321a' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='26' y1='10' x2='26' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M26 10 L46 10 L50 22 L26 32' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cline x1='26' y1='32' x2='50' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='54' cy='54' r='4' stroke='%23f5c842' stroke-width='2.5' fill='none'/%3E%3C/svg%3E"/>
+<link rel="icon" type="image/png" sizes="192x192" href="https://ravishankarpatel.in/favicon.png"/>
+<link rel="apple-touch-icon" href="https://ravishankarpatel.in/favicon.png"/>
+<!-- SEO & Open Graph -->
+<meta name="description" content="Ravishankar Patel P S — ECE Diploma student & Siemens COE Trainee at NITK Surathkal. PLC, TIA Portal, Factory Automation, SCADA, Arduino, PCB Design."/>
+<meta name="keywords" content="Ravishankar Patel, ECE, Siemens COE, NITK Surathkal, PLC, TIA Portal, automation, portfolio"/>
+<meta name="author" content="Ravishankar Patel P S"/>
+<meta property="og:title" content="Ravishankar Patel — Portfolio"/>
+<meta property="og:description" content="ECE trainee at Siemens COE, NITK Surathkal. PLC, TIA Portal, Factory Automation, SCADA & HMI."/>
+<meta property="og:image" content="https://ravishankarpatel.in/favicon.png"/>
+<meta property="og:url" content="https://ravishankarpatel.in"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ravishankar Patel — Portfolio"/>
+<meta name="twitter:description" content="ECE trainee at Siemens COE, NITK Surathkal."/>
+<meta name="twitter:image" content="https://ravishankarpatel.in/favicon.png"/>
 <style>
 :root{--red:#e8321a;--teal:#3dd9c0;--gold:#f5c842;--bg:#0a0a0a;--fg:#f2f0eb;--s1:#111111;--s2:#1a1a1a;--mu:rgba(242,240,235,.48)}
 [data-theme="light"]{
@@ -876,18 +891,78 @@ document.getElementById('termHint').textContent='⌨ tap to open terminal';
 })();
 
 /* AUTH MODAL */
-const _p=atob('KzkxIDc3OTU0MDUyOTI='),_g=atob('cmF2aXNoYW5rYXJwYXRlbHBzQGdtYWlsLmNvbQ=='),_i=atob('cHNyYXZpc2hhbmthcnBhdGVsQGljbG91ZC5jb20=');
+/* ═══════════════════════════════════════════════════
+   CONTACT PROTECTION — Multi-layer XOR + bot detection
+   Data is never in plain text anywhere in this file.
+   Reconstructed only in memory after human verification.
+═══════════════════════════════════════════════════ */
+(function(){
+  // XOR key — rotating sequence of primes
+  const _k=[17,43,97,23,71,53,89,31,67,41];
+  // Phone: split into 3 chunks, XOR encoded
+  const _pa=[58,18,80,55],_pb=[112,2,96,42,119],_pc=[25,36,25,88,37];
+  // Gmail: split into 3 chunks, XOR encoded
+  const _ga=[99,74,23,126,52,93,56,113,40],_gb=[72,99,91,0,99,34,89,41,108],_gc=[3,78,124,74,8,123,105,86,54,114];
+  // iCloud: split into 3 chunks, XOR encoded
+  const _ia=[97,88,19,118,49,92,42,119,34],_ib=[71,122,74,19,103,38,65,60,115,3],_ic=[64,114,71,14,98,35,27,58,112,46];
+
+  // Decode function — runs only after bot checks pass
+  function _dec(chunks){
+    return [...chunks[0],...chunks[1],...chunks[2]]
+      .map((v,i)=>String.fromCharCode(v^_k[i%_k.length])).join('');
+  }
+
+  // Bot detection state
+  let _mouseEvents=0,_touchEvents=0,_keyEvents=0,_t0=Date.now();
+  let _humanScore=0;
+
+  // Entropy collectors — real humans generate these, bots don't
+  document.addEventListener('mousemove',()=>{_mouseEvents++;_humanScore=Math.min(_humanScore+0.3,10);},{passive:true});
+  document.addEventListener('touchstart',()=>{_touchEvents++;_humanScore=Math.min(_humanScore+1,10);},{passive:true});
+  document.addEventListener('keydown',()=>{_keyEvents++;_humanScore=Math.min(_humanScore+0.5,10);},{passive:true});
+  document.addEventListener('scroll',()=>{_humanScore=Math.min(_humanScore+0.4,10);},{passive:true});
+  document.addEventListener('click',()=>{_humanScore=Math.min(_humanScore+1,10);},{passive:true});
+
+  // Time-on-page check — bots hit immediately
+  function _timeOk(){ return (Date.now()-_t0)>3000; }
+
+  // Honeypot — hidden field bots fill, humans don't see
+  const _hp=document.createElement('input');
+  _hp.style.cssText='position:absolute;left:-9999px;opacity:0;height:0;width:0;tabindex=-1';
+  _hp.setAttribute('autocomplete','off');
+  _hp.setAttribute('name','website');
+  document.body.appendChild(_hp);
+
+  function _botCheck(){
+    if(_hp.value.length>0) return false;          // honeypot filled
+    if(!_timeOk()) return false;                  // too fast
+    if(_mouseEvents===0&&_touchEvents===0) return false; // zero interaction
+    if(_humanScore<2) return false;               // insufficient entropy
+    return true;
+  }
+
+  // Expose decode to auth system — only callable after CAPTCHA + bot check
+  window.__revealContact=function(type){
+    if(!_botCheck()){
+      console.warn('Bot check failed');
+      return null;
+    }
+    if(type==='phone') return _dec([_pa,_pb,_pc]);
+    if(type==='gmail') return _dec([_ga,_gb,_gc]);
+    if(type==='icloud') return _dec([_ia,_ib,_ic]);
+    return null;
+  };
+})();
+
 let authTarget=null, mathAnswer=0;
 
 function openAuth(target){
   authTarget=target;
-  // reset modal state
   document.querySelectorAll('.auth-reason').forEach(r=>r.classList.remove('selected'));
   document.getElementById('nextBtn').disabled=true;
   document.getElementById('mathAns').value='';
   document.getElementById('mathErr').textContent='';
   if(target==='resume'){
-    // skip reason step — go straight to captcha
     document.querySelector('.auth-btn[onclick="checkMath()"]').textContent='Open Résumé ↗';
     document.getElementById('authOverlay').classList.add('show');
     document.body.style.overflow='hidden';
@@ -907,7 +982,6 @@ function closeAuth(){
 function showStep(n){
   document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
-  // update progress dots
   [1,2].forEach(i=>{
     const d=document.getElementById('prog'+i);
     d.className='auth-prog-dot'+(i<n?' done':i===n?' active':'');
@@ -942,25 +1016,26 @@ function checkMath(){
     setTimeout(()=>{document.getElementById('mathAns').classList.remove('wrong');generateMath();document.getElementById('mathAns').value='';},800);
     return;
   }
-  // correct — reveal display text first, then close, then open link
-  const target = authTarget;
+  const target=authTarget;
   revealDisplay(target);
   closeAuth();
-  // only open link for resume — contacts just reveal, no auto-dial/mail
   if(target==='resume'){
     setTimeout(()=>{ window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf','_blank'); }, 300);
   }
 }
 function revealDisplay(t){
+  // Decode only now — after CAPTCHA passed — using bot-checked reveal function
+  const val=window.__revealContact(t);
+  if(!val){ document.getElementById('mathErr').textContent='Verification failed — please try again.';return; }
   if(t==='phone'){
-    const d=document.getElementById('phone-display'); if(d) d.textContent=_p;
-    const p=document.getElementById('pill-phone'); if(p) p.textContent='📞 '+_p;
+    const d=document.getElementById('phone-display');if(d)d.textContent=val;
+    const p=document.getElementById('pill-phone');if(p)p.textContent='📞 '+val;
   } else if(t==='gmail'){
-    const d=document.getElementById('gmail-display'); if(d) d.textContent=_g;
-    const p=document.getElementById('pill-gmail'); if(p) p.textContent='✉ '+_g;
+    const d=document.getElementById('gmail-display');if(d)d.textContent=val;
+    const p=document.getElementById('pill-gmail');if(p)p.textContent='✉ '+val;
   } else if(t==='icloud'){
-    const d=document.getElementById('icloud-display'); if(d) d.textContent=_i;
-    const p=document.getElementById('pill-icloud'); if(p) p.textContent='✉ '+_i;
+    const d=document.getElementById('icloud-display');if(d)d.textContent=val;
+    const p=document.getElementById('pill-icloud');if(p)p.textContent='✉ '+val;
   }
 }
 // close on overlay background click
